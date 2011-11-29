@@ -1,0 +1,10 @@
+public_html/app/tmp
+!public_html/app/tmp/cache/models/empty
+!public_html/app/tmp/cache/persistent/empty
+!public_html/app/tmp/cache/views/empty
+!public_html/app/tmp/logs/empty
+!public_html/app/tmp/sessions/empty
+!public_html/app/tmp/tests/empty
+public_html/app/Config/database.php
+public_html/app/Config/passwords.php
+nbproject/
