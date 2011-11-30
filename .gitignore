@@ -1,10 +1,5 @@
-app/tmp
-!app/tmp/cache/models/empty
-!app/tmp/cache/persistent/empty
-!app/tmp/cache/views/empty
-!app/tmp/logs/empty
-!app/tmp/sessions/empty
-!app/tmp/tests/empty
+app/tmp/*
+!empty
 app/Config/database.php
 app/Config/passwords.php
 nbproject/
