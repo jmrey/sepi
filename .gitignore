@@ -3,4 +3,4 @@ app/tmp/*
 app/Config/database.php
 app/Config/passwords.php
 nbproject/
-cake20/
+cake20/*
