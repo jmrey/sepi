@@ -1,0 +1,28 @@
+.left { float:left; }
+.right { float:right; }
+.clear { clear:both; }
+html { background-color:#ffffff; }
+body { padding-top:60px; }
+.ipn-header {
+  background:#bbe4ff;
+  padding:10px 10px 0;
+  white-space:nowrap;
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
+  border-radius:6px;
+}
+.ipn-header div.left {
+  position:absolute;
+  text-indent:5px;
+}
+.ipn-header div.right {
+  padding-top:0px;
+  position:relative;
+}
+.ipn-header div.right h3, .ipn-header div.right h4 {
+  padding-right:90px;
+  position:relative;
+  text-align:right;
+  top:20px;
+}
+footer { background-color:#bbe4ff; }

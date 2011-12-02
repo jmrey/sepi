@@ -1,0 +1,49 @@
+@import 'mixins.less';
+
+@bg-color: #fff;
+@foot-color: #bbe4ff;
+@top: 60px;
+
+
+.left {
+    float:left;
+}
+.right {
+    float:right;
+}
+.clear {
+    clear:both;
+}
+
+html {
+    background-color: @bg-color;
+}
+
+body {
+    padding-top: @top;
+}
+
+.ipn-header {
+    background: darken(@foot-color, 0%);
+    padding: 10px 10px 0;
+    white-space: nowrap;
+    .border-radius(6px);
+    div.left {
+        position:absolute;
+        text-indent: 5px;
+    }
+    div.right {
+        padding-top: 0px;
+        position: relative;
+        h3, h4 {
+            padding-right: 90px;
+            position: relative;
+            text-align: right;
+            top:20px;
+        }
+    }
+}
+
+footer {
+    background-color: @foot-color;
+}
