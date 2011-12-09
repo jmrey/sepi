@@ -2,4 +2,4 @@
 
 <p><small>Created: <?php echo $user['User']['created']?></small></p>
 
-<p><?php echo $user['User']['name']?></p>
+<p><?php echo $user['User']['username']?></p>

@@ -1,3 +1,7 @@
+<?php
+    echo $this->Session->flash();
+?>
+
 <h1>User posts</h1>
 <table>
     <tr>

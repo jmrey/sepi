@@ -3,6 +3,7 @@
 .clear { clear:both; }
 html { background-color:#ffffff; }
 body { padding-top:60px; }
+body .u_actions a { margin-right:10px; }
 .ipn-header {
   background:#bbe4ff;
   padding:10px 10px 0;
@@ -25,4 +26,29 @@ body { padding-top:60px; }
   text-align:right;
   top:20px;
 }
+.form fieldset {
+  background-color:#eef8ff;
+  border:#a2d9ff 1px solid;
+  padding:15px;
+}
+.form fieldset legend {
+  background-color:#a2d9ff;
+  padding:5px;
+}
+.form .input {
+  clear:both;
+  margin:10px;
+}
+.form .input label {
+  font-size:16px;
+  line-height:24px;
+  padding:0px 10px;
+  width:200px;
+}
+.form .input input, .form .input select {
+  font-size:18px;
+  height:auto;
+  width:300px;
+}
+.form .btn, .form .actions a { margin:0px 10px; }
 footer { background-color:#bbe4ff; }

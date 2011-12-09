@@ -33,6 +33,21 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
+    public $components = array(
+        'Session',
+        'Auth' => array(
+            'authError' => "Necesitas iniciar Sesión para acceder.",
+            'loginRedirect' => array('controller' => 'users', 'action' => 'dashboard'),
+            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'welcome'),
+            'authorize' => array('Controller')
+        )
+    );
+    
+    public function beforeFilter() {
+        $this->Auth->allow('display');
+        $this->set('authUser', $this->Auth->user());
+    }
+    
     public function beforeRender()
     {
         // only compile it on development mode
@@ -55,5 +70,47 @@ class AppController extends Controller {
             }
         }
         parent::beforeRender();
+    }
+    
+    /*
+     * Revisa si el usuario es administrador.
+     */
+    public function isAdmin($user) {
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
+        return false;
+    }
+    
+    /*
+     * 
+     */
+    public function isAuthorized($user) {
+        if(isset($user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**** Alert Messages ****/
+    public function alert($message, $type = 'warning', $key = null) {
+        $this->Session->setFlash($message,'alert', array('type' => $type));
+    }
+    
+    public function error($message) {
+        $this->alert($message, 'error');
+    }
+    
+    public function success($message) {
+        $this->alert($message, 'success');
+    }
+    
+    public function warning($message) {
+        $this->alert($message, 'warning');
+    }
+    
+    public function info($message) {
+        $this->alert($message, 'info');
     }
 }
