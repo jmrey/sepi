@@ -1,5 +1,7 @@
 @import 'mixins.less';
 
+@red:  #C43C35;
+@green: #57A957;
 @bg-color: #fff;
 @foot-color: #bbe4ff;
 @top: 60px;
@@ -25,6 +27,15 @@ body {
         a {
             margin-right:10px;
         }
+    }
+}
+
+a {
+    &.success {
+        color: @green;
+    }
+    &.danger {
+        color: @red;
     }
 }
 

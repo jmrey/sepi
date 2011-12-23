@@ -34,7 +34,7 @@ class ContentsController extends AppController {
         $this->set('title', $query);
     }
     
-    public function view($id = null) {
+    public function admin_view($id = null) {
         $this->Content->id = $id;
         if (!$this->Content->exists()) {
             throw new NotFoundException('No se ha encontrado lo que buscas.');

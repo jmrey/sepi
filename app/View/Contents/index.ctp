@@ -24,7 +24,7 @@
                 array('controller' => 'users', 'action' => 'view', $content['user_id'])); ?>
         </td>
         <td><?php echo $this->Html->link($content['type'],
-                array('controller' => 'contents', 'action' => 'search', 'type', $content['type'])); ?>
+                array('controller' => 'contents', 'action' => 'display','admin' => 0, 'type', $content['type'])); ?>
         </td>
         <td><?php echo $content['title']; ?></td>
         <td><?php echo $this->Html->link($content['name'],
@@ -33,9 +33,12 @@
         <td><?php echo $content['created']; ?></td>
         <td><?php echo $content['modified']; ?></td>
         <td>
-            <?php echo $this->Form->postLink('Delete',
-                array('action' => 'delete', $content['id']),
-                array('confirm' => '¿Está seguro?'));
+            <?php 
+                echo $this->Html->link('Editar', array('action' => 'edit', $content['id']));
+                echo ' ';
+                echo $this->Form->postLink('Borrar',
+                    array('action' => 'delete', $content['id']),
+                    array('confirm' => '¿Está seguro?', 'class' => 'danger'));
             ?>
         </td>
     </tr>

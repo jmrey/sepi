@@ -49,8 +49,6 @@ class UsersController extends AppController {
     public function admin_index() {
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
-     
-        $this->render('index');
     }
     
     public function view($id = null) {
@@ -60,6 +58,17 @@ class UsersController extends AppController {
         } else {
             $this->set('user', $this->User->read(null, $id));
         }
+        $this->render('profile');
+    }
+    
+    public function admin_view($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException('Invalid User');
+        } else {
+            $this->set('user', $this->User->read(null, $id));
+        }
+        $this->render('profile');
     }
     
     public function add() {
@@ -121,19 +130,29 @@ class UsersController extends AppController {
         $this->set('text','ADMIN');
     }
     
-    public function admin_send($id = null) {
+    public function admin_email($id = null) {
+        $this->set('requireEditor',true);
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException('Usuario Inválido');
+        } else {
+            $this->set('user', $this->User->read(null, $id));
+        }
+    }
+    
+    public function admin_send() {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
             //$this->Session->setFlash('The user with id: ' . $id . ' has been deleted.');
         }
-        
-        $this->_sendContractEmail($this->User->id);
+        pr($this->request->data);
+        $this->_sendContractEmail($this->request->data);
         
         $this->success('Se ha enviado el correo');
         $this->redirect(array('action' => 'index'));
     }
     
-    function _sendContractEmail($id) {
+    function _sendContractEmail($data) {
         $this->Email->smtpOptions = array(
         'port'=>'465',
         'timeout'=>'30',
@@ -142,13 +161,13 @@ class UsersController extends AppController {
         'password'=>'navar0ne'
         );
         $this->Email->delivery = 'smtp';
-        $this->Email->to = "mue.navarone@gmail.com";
-        $this->Email->subject = 'TEST';
+        $this->Email->to = $data['to'];
+        $this->Email->subject = $data['subject'];
         $this->Email->replyTo = 'mue.navarone@gmail.com';
         $this->Email->from = 'yeah.mue@gmail.com';
         $this->Email->template = 'email';
         $this->Email->sendAs = 'html';
-        $this->set('name', $this->Auth->user('name'));
+        $this->set('message', $data['message']);
         //$this->Email->_debug = true;
         $this->Email->send();
         $this->redirect(array('controller'=>'users', 'action'=>'index'));

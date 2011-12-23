@@ -1,1 +1,1 @@
-<?php echo  'Ya valió ' . $name . '!!!'; ?>
+<div><?php echo $message; ?></div>

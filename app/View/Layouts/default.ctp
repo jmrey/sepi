@@ -21,23 +21,18 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <div class="topbar">
         <div class="topbar-inner">
             <div class="container-fluid">
-                <?php echo $this->Html->link('SEPI', array('controller' => 'pages', 'action' => 'display', 'welcome'), array('class' => 'brand')); ?>
-                <ul class="nav">
-                    <li <?php echo ($this->here === '/') ? 'class="active"' : ''; ?>>
-                        <?php echo $this->Html->link('Inicio', array('controller' => 'pages', 'action' => 'display', 'welcome', 'admin' => 0), array()); ?>
-                    </li>
-                    <?php if($authUser) { ?>
-                    <li <?php echo (strpos($this->here,'/dashboard')) ? 'class="active"' : ''; ?>>
-                        <?php echo $this->Html->link('Dashboard', '/dashboard', array()); ?>
-                    </li>
-                    <?php } ?>
-                    <li <?php echo ($this->here === '/about') ? 'class="active"' : ''; ?>>
-                        <?php echo $this->Html->link('Acerca', '/about', array()); ?>
-                    </li>
-                    <li <?php echo ($this->here === '/contact') ? 'class="active"' : ''; ?>>
-                        <?php echo $this->Html->link('Contacto', '/contact', array()); ?>
-                    </li>
-                </ul>
+                <?php echo $this->Html->link('SEPI', array('controller' => 'pages', 'action' => 'display', 'welcome', 'admin' => 0), array('class' => 'brand')); ?>
+                <?php 
+                    echo $this->element('menu', array(
+                        'menu' => array(
+                            'Inicio' => '/',
+                            'Dashboard' => array('url' => '/dashboard', 'matches' => array('/dashboard', '/admin'), 'onLogin' => 'on'),
+                            'Acerca' => '/about',
+                            'Contacto' => '/contact'
+                        ),
+                        'class' => 'nav'
+                    ));
+                ?>
                 <p class="pull-right u_actions">
                     <?php
                         if (!$authUser) {
@@ -55,23 +50,19 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <div class="container-fluid">
         <div class="sidebar">
             <div class="well">
-                <h5><?php echo $this->Html->link('Usuarios', array('controller' => 'users', 'action' => 'index'), array()); ?></h5>
+                <h5><?php echo ($authUser)?$this->Html->link('Usuarios', array('controller' => 'users', 'action' => 'index'), array()):'Usurios'; ?></h5>
                 <ul>
                     <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
                 </ul>
-                <h5><?php echo $this->Html->link('Becas', array('controller' => 'becas', 'action' => 'index'), array()); ?></h5>
+                <h5><?php echo ($authUser)?$this->Html->link('Becas', array('controller' => 'becas', 'action' => 'index'), array()):'Becas'; ?></h5>
+                <ul>
+                    <li><a href="#">Informaci&oacuten</a></li>
+                </ul>
+                <h5><?php echo ($authUser)?$this->Html->link('Contenidos', array('controller' => 'contents', 'action' => 'index'), array()):'Contenidos'; ?></h5>
                 <ul>
                     <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
+
                 </ul>
-                <h5><?php echo $this->Html->link('Contents', array('controller' => 'contents', 'action' => 'index'), array()); ?></h5>
             </div>
         </div>
         <div class="content">
