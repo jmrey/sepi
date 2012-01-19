@@ -5,28 +5,24 @@
 @bg-color: #fff;
 @foot-color: #bbe4ff;
 @top: 60px;
+@btn-margin: 0px 10px;
 
 
-.left {
-    float:left;
-}
-.right {
-    float:right;
-}
-.clear {
-    clear:both;
+.left { float: left; }
+.right { float: right !important; }
+.clear { clear: both; }
+
+.max-width {
+    max-width: 1400px;
+    margin: auto;
 }
 
-html {
-    background-color: @bg-color;
-}
+html { background-color: @bg-color; }
 
 body {
     padding-top: @top;
-    .u_actions{
-        a {
-            margin-right:10px;
-        }
+    .u_actions a{
+        margin-right: 10px;
     }
 }
 
@@ -37,6 +33,35 @@ a {
     &.danger {
         color: @red;
     }
+    &.btn {
+        margin: @btn-margin;
+    }
+}
+
+.dashboard {
+    h1 {
+        font-family: Georgia, Arial;
+        font-size: 24px;
+        font-style: italic;
+        margin: 5px;
+    }
+    table {
+        tbody th {
+            border-top: none;
+        }
+        td, th {
+            padding: 8px 8px;
+            vertical-align: middle;
+            ul, ol {
+                margin: 0 0 0 5px;
+            }
+        }
+        &.users {
+            td {
+                line-height: 20px;
+            }
+        }
+    }
 }
 
 .ipn-header {
@@ -45,7 +70,7 @@ a {
     white-space: nowrap;
     .border-radius(6px);
     div.left {
-        position:absolute;
+        position: absolute;
         text-indent: 5px;
     }
     div.right {
@@ -63,15 +88,15 @@ a {
 .form {
     fieldset {
         background-color:#eef8ff;
-        border:darken(#eef8ff,15) 1px solid;
+        border: darken(#eef8ff,15) 1px solid;
         padding:15px;
         legend{
-            background-color:darken(#eef8ff,15);
+            background-color: darken(#eef8ff,15);
             padding:5px;
         }
     }
     .input {
-        clear:both;
+        clear: both;
         margin: 10px;
         label {
             font-size: 16px;
@@ -81,15 +106,35 @@ a {
         }
         input, select{
             font-size: 18px;
-            height:auto;
-            width:300px;
+            height: auto;
+            width: 300px;
         }
     }
     .btn, .actions a{
-        margin:0px 10px;
+        margin:@btn-margin;
+    }
+}
+.email .input {
+    label {
+        font-size:14px;
+        text-align: left;
+        width: 100px;
+    }
+    input {
+        font-size:14px;
+        width: 80%;
     }
 }
 
 footer {
     background-color: @foot-color;
+    bottom: 5px;
+    position: fixed;
+    text-align: center;
+    //width: 100%;
+}
+
+div.sql_alert {
+    position: absolute;
+    bottom: 50px;
 }

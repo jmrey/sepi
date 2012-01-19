@@ -1,5 +1,5 @@
-<div class="contents form">
-<?php echo $this->Form->create('Content'); ?>
+<div class="contenidos form">
+<?php echo $this->Form->create('Contenido'); ?>
 <fieldset>
     <legend><?php echo 'Agregar contenido'; ?></legend>
     <?php
@@ -18,8 +18,8 @@
         echo $this->Form->input('type', array(
             'label' => 'Tipo',
             'options' => array(
-                'about' => 'Acerca', 
-                'contact' => 'Contacto',
+                'acerca' => 'Acerca', 
+                'contacto' => 'Contacto',
                 'info' => 'Información',
                 'post' => 'Post'
             )

@@ -1,10 +1,10 @@
 <?php
-class Beca extends AppModel {
-    public $name = 'Beca';
+class Documento extends AppModel {
+    public $name = 'Documento';
     public $belongsTo = 'User';
     
-    public $validate = array(
-        /*'username' => array(
+    /*public $validate = array(
+        'username' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
                 'message' => 'Nombre de usuario es requerido'
@@ -21,18 +21,19 @@ class Beca extends AppModel {
                 'rule' => array('notEmpty'),
                 'message' => 'Contraseña es requerida'
             )
-        ),*/
+        ),
         'type' => array(
             'valid' => array(
                 'rule' => array('inList', array('pifi', 'cotepabe', 'cofaa','sibe')),
-                'message' => 'Por ingresa un tipo de beca valido',
+                'message' => 'Por ingresa un tipo de content valido',
                 'allowEmpty' => false
             )
         )
     );
+    */
     
-    public function isOwnedBy($beca, $user) {
-        return $this->field($id, array('id' => $beca, 'user_id' => $user)) === $beca;
+    public function isOwnedBy($documento, $user) {
+        return $this->field($id, array('id' => $documento, 'user_id' => $user)) === $documento;
     }
 }
 ?>

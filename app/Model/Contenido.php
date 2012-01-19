@@ -1,6 +1,6 @@
 <?php
-class Content extends AppModel {
-    public $name = 'Content';
+class Contenido extends AppModel {
+    public $name = 'Contenido';
     
     /*public $validate = array(
         'username' => array(
@@ -24,14 +24,14 @@ class Content extends AppModel {
         'type' => array(
             'valid' => array(
                 'rule' => array('inList', array('pifi', 'cotepabe', 'cofaa','sibe')),
-                'message' => 'Por ingresa un tipo de content valido',
+                'message' => 'Por ingresa un tipo de contenido valido',
                 'allowEmpty' => false
             )
         )
     );
     */
-    public function isOwnedBy($content, $user) {
-        return $this->field($id, array('id' => $content, 'user_id' => $user)) === $content;
+    public function isOwnedBy($contenido, $user) {
+        return $this->field($id, array('id' => $contenido, 'user_id' => $user)) === $contenido;
     }
 }
 ?>

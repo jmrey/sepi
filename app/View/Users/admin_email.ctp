@@ -1,4 +1,4 @@
-<div class="contents form">
+<div class="email form">
 <?php echo $this->Form->create(false, array('action' => 'send')); ?>
 <fieldset>
     <legend>Correo Electr&oacute;nico</legend>
@@ -9,7 +9,7 @@
         ));
         
         echo $this->Form->input('subject', array(
-            'label' => 'Asunte'
+            'label' => 'Asunto:'
         ));
         //date('Y-m-d H:i:s')
         echo $this->Form->textarea('message', array(

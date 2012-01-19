@@ -1,6 +1,8 @@
 app/tmp/*
+*.pdf
 !empty
 app/Config/database.php
 app/Config/passwords.php
 nbproject/
 cake20/
+public_html/js/ckeditor/*

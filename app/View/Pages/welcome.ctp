@@ -18,7 +18,7 @@
     <p><?php echo $this->Html->link('Leer más »', '/about', array('class' => 'btn primary large')); ?>
 </div>
 <!-- Example row of columns -->
-<div class="row">
+<!-- <div class="row">
     <div class="span8">
         <h2>Titulo 1</h2>
         <p>Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
@@ -29,4 +29,4 @@
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
         <p><a class="btn" href="#">View details &raquo;</a></p>
     </div>
-</div>
+</div>-->

@@ -1,29 +1,33 @@
+<?php
+    echo $this->Session->flash();
+    //echo pr($documentos);
+?>
 <div class="dashboard">
-<h1>Becas</h1>
+<h1>Documentos</h1>
 <?php echo $this->element('dashboard_menu'); ?>
+
 <table>
     <tr>
         <th>Id</th>
-        <th>Usuario</th>
+        <th>Nombre</th>
         <th>Tipo</th>
-        <th>Estado</th>
-        <th>Empieza</th>
-        <th>Termina</th>
+        <th>Tamaño</th>
+        <th>Subido por:</th>
         <th>Acciones</th>
     </tr>
-    <?php foreach ($becas as $b): ?>
-    <?php  $beca = $b['Beca']; ?>
-    <?php  $user = $b['User']; ?>
+    <?php foreach ($documentos as $d): ?>
+    <?php  $documento = $d['Documento']; ?>
+    <?php  $user = $d['User']; ?>
     <tr>
-        <td><?php echo $beca['id']; ?></td>
+        <td><?php echo $documento['id']; ?></td>
+        <td><?php echo $this->Html->link($documento['name'],
+                '/' . $documento['url'], array('target' => '_blank')); ?></td>
+        <td><?php echo $documento['type']; ?></td>
+        <td><?php echo $this->Number->toReadableSize($documento['size']); ?></td>
         <td>
             <?php echo $this->Html->link($user['username'],
-                array('controller' => 'users', 'action' => 'view', $beca['user_id'])); ?>
+                array('controller' => 'users', 'action' => 'view', $documento['user_id'])); ?>
         </td>
-        <td><?php echo strtoupper($beca['type']); ?></td>
-        <td><?php echo $beca['status']; ?></td>
-        <td><?php echo $beca['begin_date']; ?></td>
-        <td><?php echo $beca['end_date']; ?></td>
         <td>
             <ul>
                 <?php 
@@ -31,7 +35,7 @@
                 ?>
                 <li>            
                      <?php   echo $this->Form->postLink('Aprobar',
-                            array('action' => 'delete', 'admin' => 0, $beca['id']),
+                            array('action' => 'delete', 'admin' => 0, $documento['id']),
                             array('confirm' => '¿Está seguro?', 'class' => 'success'));
                      ?>
                 </li>
@@ -40,13 +44,13 @@
                 ?>
                 <li>
                     <?php echo $this->Form->postLink('Observaciones',
-                        array('action' => 'delete', 'admin' => 0, $beca['id']),
+                        array('action' => 'delete', 'admin' => 0, $documento['id']),
                         array('confirm' => '¿Está seguro?'));
                     ?>
                 </li>
                 <li>
-                    <?php echo $this->Form->postLink('Cancelar',
-                        array('action' => 'delete', 'admin' => 0, $beca['id']),
+                    <?php echo $this->Form->postLink('Borrar',
+                        array('action' => 'delete', 'admin' => 0, $documento['id']),
                         array('confirm' => '¿Está seguro?', 'class' => 'danger'));
                     ?>
                 </li>
@@ -56,7 +60,7 @@
     <?php endforeach; ?>
 </table>
 <div class="actions">
-    <?php echo $this->Html->link('Agregar Beca', array('controller' => 'becas', 'action' => 'add', 'admin' => '0'),
+    <?php echo $this->Html->link('Subir Archivo', array('controller' => 'documentos', 'action' => 'upload', 'admin' => '0'),
             array('class' => 'btn primary')); ?>
 </div>
 </div>

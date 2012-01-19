@@ -1,11 +1,29 @@
 .left { float:left; }
-.right { float:right; }
+.right { float:right !important; }
 .clear { clear:both; }
+.max-width {
+  max-width:1400px;
+  margin:auto;
+}
 html { background-color:#ffffff; }
 body { padding-top:60px; }
 body .u_actions a { margin-right:10px; }
 a.success { color:#57a957; }
 a.danger { color:#c43c35; }
+a.btn { margin:0px 10px; }
+.dashboard h1 {
+  font-family:Georgia, Arial;
+  font-size:24px;
+  font-style:italic;
+  margin:5px;
+}
+.dashboard table tbody th { border-top:none; }
+.dashboard table td, .dashboard table th {
+  padding:8px 8px;
+  vertical-align:middle;
+}
+.dashboard table td ul, .dashboard table td ol, .dashboard table th ul, .dashboard table th ol { margin:0 0 0 5px; }
+.dashboard table.users td { line-height:20px; }
 .ipn-header {
   background:#bbe4ff;
   padding:10px 10px 0;
@@ -53,4 +71,22 @@ a.danger { color:#c43c35; }
   width:300px;
 }
 .form .btn, .form .actions a { margin:0px 10px; }
-footer { background-color:#bbe4ff; }
+.email .input label {
+  font-size:14px;
+  text-align:left;
+  width:100px;
+}
+.email .input input {
+  font-size:14px;
+  width:80%;
+}
+footer {
+  background-color:#bbe4ff;
+  bottom:5px;
+  position:fixed;
+  text-align:center;
+}
+div.sql_alert {
+  position:absolute;
+  bottom:50px;
+}

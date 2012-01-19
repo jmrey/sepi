@@ -3,6 +3,14 @@ App::uses('AuthComponent', 'Controller/Component');
 
 class User extends AppModel {
     public $name = 'User';
+    public $useTable = 'usuarios';
+    var $hasMany = array (
+      'Documento' => array (
+            'className' => 'Documento',
+            'foreignKey' => 'user_id'
+         )
+    );
+    
     
     public $validate = array(
         'username' => array(
@@ -25,8 +33,8 @@ class User extends AppModel {
         ),
         'role' => array(
             'valid' => array(
-                'rule' => array('inList', array('profesor', 'alumno', 'administrativo')),
-                'message' => 'Por ingresa un rol valido',
+                'rule' => array('inList', array('profesor', 'alumno', 'administrativo', 'admin')),
+                'message' => 'Por favor ingresa un rol válido.',
                 'allowEmpty' => false
             )
         )

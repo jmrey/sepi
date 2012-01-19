@@ -1,5 +1,5 @@
 <?php 
-    $c = $content['Content'];
+    $c = $contenido['Contenido'];
 ?>
 
 <h1><?php echo $c['title']?></h1>

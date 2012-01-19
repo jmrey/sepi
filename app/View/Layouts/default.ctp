@@ -6,8 +6,7 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
 <head>
     <meta charset="UTF-8" />
     <title>
-        <?php echo $sepiDescription ?>:
-        <?php echo $title_for_layout; ?>
+        <?php echo $sepiDescription ?>: <?php echo $title_for_layout; ?>
     </title>
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -20,70 +19,71 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
 <body>
     <div class="topbar">
         <div class="topbar-inner">
-            <div class="container-fluid">
+            <div class="container-fluid max-width">
                 <?php echo $this->Html->link('SEPI', array('controller' => 'pages', 'action' => 'display', 'welcome', 'admin' => 0), array('class' => 'brand')); ?>
                 <?php 
                     echo $this->element('menu', array(
                         'menu' => array(
                             'Inicio' => '/',
-                            'Dashboard' => array('url' => '/dashboard', 'matches' => array('/dashboard', '/admin'), 'onLogin' => 'on'),
-                            'Acerca' => '/about',
-                            'Contacto' => '/contact'
+                            'Dashboard' => array('url' => '/dashboard', 'matches' => array('/dashboard', '/admin'), 'visibleTo' => 'auth'),
+                            'Acerca' => '/acerca',
+                            'Contacto' => '/contacto'                            
                         ),
                         'class' => 'nav'
                     ));
+                    
+                    echo $this->element('menu', array(
+                        'menu' => array(
+                            'Registrar' => array('url' => '/signup', 'visibleTo' => 'guests'),
+                            'Iniciar Sesión' => array('url' => '/login', 'visibleTo' => 'guests'),
+                            $authUser['name'] => array('url' => '/dashboard', 'visibleTo' => 'auth'),
+                            'Cerrar Sesión' => array('url' => '/logout', 'visibleTo' => 'auth')
+                        ),
+                        'class' => 'nav right'
+                    ));
                 ?>
-                <p class="pull-right u_actions">
-                    <?php
-                        if (!$authUser) {
-                            echo $this->Html->link('Registrar', '/signup');
-                            echo $this->Html->link('Iniciar Sesión', '/login');
-                        } else {
-                            echo $this->Html->link($authUser['name'], '/dashboard');
-                            echo $this->Html->link('Cerrar Sesión', '/logout'); 
-                        }
-                    ?>
-                </p>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid max-width">
         <div class="sidebar">
             <div class="well">
-                <h5><?php echo ($authUser)?$this->Html->link('Usuarios', array('controller' => 'users', 'action' => 'index'), array()):'Usurios'; ?></h5>
-                <ul>
-                    <li><a href="#">Link</a></li>
-                </ul>
-                <h5><?php echo ($authUser)?$this->Html->link('Becas', array('controller' => 'becas', 'action' => 'index'), array()):'Becas'; ?></h5>
+                <?php if ($isAdmin) { ?>
+                    <h5>
+                        <?php echo $this->Html->link('Usuarios',
+                                array('controller' => 'users', 'action' => 'list')); ?>
+                    </h5>
+                    <ul>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                    <h5>
+                        <?php echo $this->Html->link('Contenidos',
+                                array('controller' => 'contents', 'action' => 'index')); ?>
+                    </h5>
+                    <ul>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                <?php } ?>
+                <h5>
+                    <?php echo ($authUser) ? $this->Html->link('Becas',
+                            array('controller' => 'becas', 'action' => 'index',
+                                'admin' => $isAdmin)) : 'Becas'; ?>
+                </h5>
                 <ul>
                     <li><a href="#">Informaci&oacuten</a></li>
                 </ul>
-                <h5><?php echo ($authUser)?$this->Html->link('Contenidos', array('controller' => 'contents', 'action' => 'index'), array()):'Contenidos'; ?></h5>
-                <ul>
-                    <li><a href="#">Link</a></li>
-
-                </ul>
+                <h5><?php echo $this->Html->link('Convocatorias', '/convocatorias'); ?></h5>
             </div>
         </div>
         <div class="content">
-            <?php
-                echo $this->Session->flash(null, array(
-                    'params' => array('type' => 'success'),
-                    'element' => 'alert'
-                ));
-            ?>
-            <?php
-                if (isset($smtperrors)) {
-                    pr($smtperrors);
-                    
-                } 
-             ?>
+            <?php echo $this->Session->flash(); ?>
             <?php echo $content_for_layout ?>
-            <hr>
-            <footer>
-                <?php echo $this->element('footer'); ?>
-            </footer>
+            <hr />
         </div>
+        <footer>
+            <?php echo $this->element('sql_dump_alert'); ?>
+            <?php echo $this->element('footer'); ?>
+        </footer>
     </div>
     <?php
         $scripts_array = array('jquery-1.7.1', 'bootstrap-alerts', 'bootstrap-tabs');
@@ -94,6 +94,5 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
         
         echo $this->Html->script($scripts_array);
     ?>
-    <?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

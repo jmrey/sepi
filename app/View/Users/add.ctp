@@ -5,7 +5,7 @@
         <legend><?php echo 'Datos de Sesión'; ?></legend>
         <?php
             echo $this->Form->input('username', array(
-                'label' => 'Nombre de User'
+                'label' => 'Nombre de Usuario'
             ));
             echo $this->Form->input('email', array(
                 'label' => 'Correo Electrónico'
@@ -22,7 +22,7 @@
                 'label' => 'Nombre Completo'
             ));
             echo $this->Form->input('role', array(
-                'label' => 'Rol',
+                'label' => 'Soy',
                 'options' => array( 
                     'alumno' => 'Alumno',
                     'profesor' => 'Profesor',
@@ -35,6 +35,7 @@
         <?php 
             echo $this->Form->end(array('label' => 'Registrar', 'class' => 'btn large success', 'div' => false));
             echo $this->Form->button('Limpiar', array('type' => 'reset', 'class' => 'btn large'));
+            echo $this->Html->link('Iniciar Sesión', '/login');
         ?>
     </div>
 </div>

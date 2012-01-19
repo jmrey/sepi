@@ -1,7 +1,7 @@
 <?php
 
-class ContentsController extends AppController {
-    public $name = 'Contents';
+class ContenidosController extends AppController {
+    public $name = 'Contenidos';
     public $helpers = array('Html', 'Form');
     public $components = array('Session');
     
@@ -11,7 +11,7 @@ class ContentsController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('display');
+        $this->Auth->allow('display', 'announcements');
     }
     
     public function index() {
@@ -22,24 +22,24 @@ class ContentsController extends AppController {
     }
     
     public function admin_index() {
-        $this->set('contents', $this->Content->find('all'));
+        $this->set('contenidos', $this->Contenido->find('all'));
         $this->render('index');
     }
     
     public function display($field = 'type', $query = 'about') {
-        $this->set('contents', $this->Content->find('all', array(
+        $this->set('contenidos', $this->Contenido->find('all', array(
             'limit' => 6,
-            'conditions' => array('Content.' . $field => $query)
+            'conditions' => array('Contenido.' . $field => $query)
         )));
         $this->set('title', $query);
     }
     
     public function admin_view($id = null) {
-        $this->Content->id = $id;
-        if (!$this->Content->exists()) {
+        $this->Contenido->id = $id;
+        if (!$this->Contenido->exists()) {
             throw new NotFoundException('No se ha encontrado lo que buscas.');
         } else {
-            $this->set('content', $this->Content->read());
+            $this->set('contenido', $this->Contenido->read());
         }
     }
     
@@ -53,17 +53,33 @@ class ContentsController extends AppController {
     public function admin_add() {
         $this->set('requireEditor',true);
         if ($this->request->is('post')) {
-            $this->Content->create();
-            //$this->request->data['Content']['user_id'] = $this->Session->read('Auth.User.id');
-            $this->request->data['Content']['user_id'] = $this->Auth->user('id');
-            if ($this->Content->save($this->request->data)) {
-                $this->Session->setFlash('Se ha guardado la content');
+            $this->Contenido->create();
+            //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
+            $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
+            if ($this->Contenido->save($this->request->data)) {
+                $this->Session->setFlash('Se ha guardado la contenido');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash('Ha habido un problema. Intenta más tarde.');
             }
         }
         $this->render('add');
+    }
+    
+    public function admin_add_convocatory() {
+        $this->set('requireEditor',true);
+        if ($this->request->is('post')) {
+            $this->Contenido->create();
+            //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
+            $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
+            if ($this->Contenido->save($this->request->data)) {
+                $this->Session->setFlash('Se ha guardado la contenido');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash('Ha habido un problema. Intenta más tarde.');
+            }
+        }
+        $this->render('add_convocatory');
     }
     
     public function edit($id = null) {
@@ -75,20 +91,20 @@ class ContentsController extends AppController {
     
     public function admin_edit($id = null) {
         $this->set('requireEditor',true);
-        $this->Content->id = $id;
-        if (!$this->Content->exists()) {
+        $this->Contenido->id = $id;
+        if (!$this->Contenido->exists()) {
             throw new NotFoundException('Contenido no existe.');
         }
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Content->save($this->request->data)) {
+            if ($this->Contenido->save($this->request->data)) {
                 $this->Session->setFlash('Se han guardado los datos.');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash('No se han podido guardar los datos.');
             }
         } else {
-            $this->request->data = $this->Content->read(null, $id);
-            unset($this->request->data['Content']['password']);
+            $this->request->data = $this->Contenido->read(null, $id);
+            unset($this->request->data['Contenido']['password']);
         }
         $this->render('edit');
     }
@@ -96,18 +112,25 @@ class ContentsController extends AppController {
     public function admin_delete($id = null) {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
-            //$this->Session->setFlash('The Content with id: ' . $id . ' has been deleted.');
+            //$this->Session->setFlash('The Contenido with id: ' . $id . ' has been deleted.');
         }
-        $this->Content->id = $id;
-        if (!$this->Content->exists()) {
+        $this->Contenido->id = $id;
+        if (!$this->Contenido->exists()) {
             throw new NotFoundException('Usuario Invalido');
         }
-        if ($this->Content->delete()) {
-            $this->Session->setFlash('The Content with id: ' . $id . ' has been deleted.');
+        if ($this->Contenido->delete()) {
+            $this->Session->setFlash('The Contenido with id: ' . $id . ' has been deleted.');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash('Content no se ha podido borrar.');
+        $this->Session->setFlash('Contenido no se ha podido borrar.');
         $this->redirect(array('action' => 'index'));
+    }
+    
+    public function announcements() {
+        $this->set('convocatorias', $this->Contenido->find('all', array(
+            'limit' => 10,
+            'conditions' => array('Contenido.type' => 'convocatoria')
+        )));
     }
     
     public function isAuthorized($user) {

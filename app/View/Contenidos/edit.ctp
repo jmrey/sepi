@@ -1,6 +1,6 @@
-<div class="contents form">
+<div class="contenidos form">
 <h1>Edit User</h1>
-<?php echo $this->Form->create('Content', array('action' => 'edit'));?>
+<?php echo $this->Form->create('Contenido', array('action' => 'edit'));?>
 <fieldset>
     <legend><?php echo 'Editar Contenido'; ?></legend>
 <?php

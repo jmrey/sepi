@@ -33,6 +33,11 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
+    
+    /*
+     * Array que contiene los componentes que necesita el controlador, en este caso, los componentes
+     * que necesita la clase base AppController.
+     */
     public $components = array(
         'Session',
         'Auth' => array(
@@ -43,37 +48,49 @@ class AppController extends Controller {
         )
     );
     
+    /**
+     * Función llamada antes de ejecutar cada acción del controlador.
+     */
     public function beforeFilter() {
         $this->Auth->allow('display');
         $this->set('authUser', $this->Auth->user());
+        $this->set('isAdmin', $this->Auth->user('role') === 'admin');
     }
     
+    /**
+     * Función llamada después de que cada acción del controlador ha sido ejecutada,
+     * pero antes de renderizar su vista.
+     */
     public function beforeRender()
     {
-        // only compile it on development mode
+        // Sólo compila si no es un entorno de producción.
         if (Configure::read('debug') > 0) {
-            // import the file to application
+            // Importa los modulos necesarios.
             App::import('Vendor', 'lessc');
  
             if (defined('WEBROOT_DIR')) {
+                // Array de los archivos less.
                 $css_array = array('bootstrap', 'main');
+                
 		for ($i = 0; $i < count($css_array); $i++) {
-                    // set the LESS file location
+                    // Establece el directorio donde está el archivo LESS.
                     $less = ROOT . DS . WEBROOT_DIR . DS . 'less' . DS . $css_array[$i] .'.less';
  
-                    // set the CSS file to be written
+                    // Establece dónde se guardará el CSS compilado.
                     $css = ROOT . DS . WEBROOT_DIR . DS . 'css' . DS . $css_array[$i] . '.css';
  
-                    // compile the file
+                    // Compila el archivo LESS
                     lessc::ccompile($less, $css);  
                 }
             }
         }
+        
+        // Llama a la función de la clase padre 'Controller'.
         parent::beforeRender();
     }
     
     /*
-     * Revisa si el usuario es administrador.
+     * Revisa si el usuario tiene como rol 'Administrador'.
      */
     public function isAdmin($user) {
         if (isset($user['role']) && $user['role'] === 'admin') {
@@ -82,8 +99,8 @@ class AppController extends Controller {
         return false;
     }
     
-    /*
-     * 
+    /* 
+     * Revisa si el User ha iniciado sesión.
      */
     public function isAuthorized($user) {
         if(isset($user)) {
@@ -93,9 +110,11 @@ class AppController extends Controller {
         }
     }
     
-    /**** Alert Messages ****/
+    /*
+     * Mensajes Flash.
+     */
     public function alert($message, $type = 'warning', $key = null) {
-        $this->Session->setFlash($message,'alert', array('type' => $type));
+        $this->Session->setFlash($message, 'alert', array('type' => $type));
     }
     
     public function error($message) {

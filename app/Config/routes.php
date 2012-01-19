@@ -39,10 +39,11 @@
         Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
         
         
-        Router::connect('/about', array('controller' => 'contents', 'action' => 'display', 'type', 'about'));
-        Router::connect('/contact', array('controller' => 'contents', 'action' => 'display', 'type', 'contact'));
+        Router::connect('/acerca', array('controller' => 'contenidos', 'action' => 'display', 'type', 'acerca'));
+        Router::connect('/contacto', array('controller' => 'contenidos', 'action' => 'display', 'type', 'contacto'));
+        Router::connect('/convocatorias', array('controller' => 'contenidos', 'action' => 'announcements'));
         
-        //Router::connect('/contents/:field::query', array('controller' => 'contents', 'action' => 'search'),
+        //Router::connect('/contenidos/:field::query', array('controller' => 'contenidos', 'action' => 'search'),
                 //array('pass' => array('field', 'query')));//
         
 /**
