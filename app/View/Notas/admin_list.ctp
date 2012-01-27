@@ -6,24 +6,24 @@
         <th>Id</th>
         <th>Usuario</th>
         <th>Tipo</th>
+        <th>Tipo id</th>
+        <th>Nota</th>
         <th>Estado</th>
-        <th>Empieza</th>
-        <th>Termina</th>
         <th>Acciones</th>
     </tr>
-    <?php foreach ($becas as $b): ?>
-    <?php  $beca = $b['Beca']; ?>
-    <?php  $user = $b['User']; ?>
+    <?php foreach ($notas as $b): ?>
+    <?php  $beca = $b['Nota']; ?>
+    <?php  //$user = $b['User']; ?>
     <tr class="no-border">
         <td><?php echo $beca['id']; ?></td>
         <td>
-            <?php echo $this->Html->link($user['username'],
-                array('controller' => 'users', 'action' => 'view', $beca['user_id'])); ?>
+            <?php echo 'user';//$this->Html->link($user['username'],
+                //array('controller' => 'users', 'action' => 'view', $beca['user_id'])); ?>
         </td>
-        <td><?php echo strtoupper($beca['type']); ?></td>
+        <td><?php echo $this->Html->link($beca['type'], array('controller' => 'notas', 'action' => 'list', $beca['type'], 'admin' => '1')); ?></td>
+        <td><?php echo $beca['type_id']; ?></td>
+        <td><?php echo $beca['text']; ?></td>
         <td><?php echo $beca['status']; ?></td>
-        <td><?php echo $beca['begin_date']; ?></td>
-        <td><?php echo $beca['end_date']; ?></td>
         <td>
             <ul>
                 <?php 
@@ -39,10 +39,6 @@
                     }
                 ?>
                 <li>
-                    <?php echo $this->Html->link('Notas', '#',
-                            array('class' => 'toggle-notes')); ?>
-                </li>
-                <li>
                     <?php echo $this->Form->postLink('Cancelar',
                         array('action' => 'delete', 'admin' => 0, $beca['id']),
                         array('confirm' => '¿Está seguro?', 'class' => 'danger'));
@@ -54,18 +50,18 @@
     <tr class="tr-notes">
         <td colspan="7">
             <div class="hide">
-                <?php echo $this->element('add_note', 
-                        array('to_user_id' => $beca['user_id'],
-                            'type' => 'beca',
-                            'type_id' => $beca['id'])
-                        ); ?>
+                <?php
+                    echo 'HOLa mundol';
+                ?>
             </div>
         </td>
     </tr>
     <?php endforeach; ?>
 </table>
 <div class="actions">
-    <?php echo $this->Html->link('Agregar Beca', array('controller' => 'becas', 'action' => 'add', 'admin' => '0'),
+    <?php echo $this->Html->link('Agregar Nota', array('controller' => 'becas', 'action' => 'add', 'admin' => '0'),
+            array('class' => 'btn primary')); ?>
+    <?php echo $this->Html->link($title, array('controller' => 'becas', 'action' => 'add', 'admin' => '0'),
             array('class' => 'btn primary')); ?>
 </div>
 </div>

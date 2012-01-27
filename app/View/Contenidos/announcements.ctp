@@ -4,7 +4,7 @@
         <h3>Lo sentimos, no existen convocatorias.</h3>
     <?php } else {
         foreach ($convocatorias as $c):
-            $convocatoria = $c['Convocatoria'] ?>
+            $convocatoria = $c['Contenido'] ?>
         <h3><?php echo $convocatoria['title']; ?></h3>
         <div class="convocatoria" id="<?php echo $convocatoria['name'];?>">
             <?php echo $convocatoria['content']; ?>

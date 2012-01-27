@@ -88,6 +88,7 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <?php
         $scripts_array = array('jquery-1.7.1', 'bootstrap-alerts', 'bootstrap-tabs');
         if (isset($requireEditor) && $requireEditor == true) {
+            echo $this->Html->scriptBlock('var useCKeditor = true;');
             array_push($scripts_array, 'ckeditor/ckeditor','ckeditor/adapters/jquery');
         }
         array_push($scripts_array,'sepi');
