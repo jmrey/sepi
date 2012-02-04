@@ -12,20 +12,20 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <meta name="author" content="" />
     <?php
         echo $this->Html->meta('icon');
-        echo $this->Html->css(array('bootstrap', 'main'));
+        echo $this->Html->css(array('bootstrap', 'responsive', 'main', 'flick/jquery-ui-1.8.17.custom'));
         echo $scripts_for_layout;
     ?>
 </head>
 <body>
-    <div class="topbar">
-        <div class="topbar-inner">
-            <div class="container-fluid max-width">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container max-width">
                 <?php echo $this->Html->link('SEPI', array('controller' => 'pages', 'action' => 'display', 'welcome', 'admin' => 0), array('class' => 'brand')); ?>
                 <?php 
                     echo $this->element('menu', array(
                         'menu' => array(
                             'Inicio' => '/',
-                            'Dashboard' => array('url' => '/dashboard', 'matches' => array('/dashboard', '/admin'), 'visibleTo' => 'auth'),
+                            'Dashboard' => array('url' => '/dashboard', 'matches' => array('/dashboard', '/admin', '/becas', '/documentos', '/notas'), 'visibleTo' => 'auth'),
                             'Acerca' => '/acerca',
                             'Contacto' => '/contacto'                            
                         ),
@@ -45,48 +45,34 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
             </div>
         </div>
     </div>
-    <div class="container-fluid max-width">
-        <div class="sidebar">
-            <div class="well">
-                <?php if ($isAdmin) { ?>
-                    <h5>
-                        <?php echo $this->Html->link('Usuarios',
-                                array('controller' => 'users', 'action' => 'list')); ?>
-                    </h5>
-                    <ul>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                    <h5>
-                        <?php echo $this->Html->link('Contenidos',
-                                array('controller' => 'contents', 'action' => 'index')); ?>
-                    </h5>
-                    <ul>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                <?php } ?>
-                <h5>
-                    <?php echo ($authUser) ? $this->Html->link('Becas',
-                            array('controller' => 'becas', 'action' => 'index',
-                                'admin' => $isAdmin)) : 'Becas'; ?>
-                </h5>
-                <ul>
-                    <li><a href="#">Informaci&oacuten</a></li>
-                </ul>
-                <h5><?php echo $this->Html->link('Convocatorias', '/convocatorias'); ?></h5>
+    <div class="container">
+        <div class="row">
+            <div class="span2">
+                <div class="well sidebar-nav">
+                    <?php echo $this->element('sidebar'); ?>
+                </div>
+            </div>
+            <div class="span10">
+                <?php echo $this->Session->flash(); ?>
+                <div id="dashboard" class="content">
+                    <header>
+                        <?php echo $this->element('dashboard_menu'); ?>
+                        <div class="subnav">
+                            <?php echo $this->element('subnav'); ?>
+                        </div>
+                    </header>
+                    <?php echo $content_for_layout ?>
+                </div>
+                <hr />
             </div>
         </div>
-        <div class="content">
-            <?php echo $this->Session->flash(); ?>
-            <?php echo $content_for_layout ?>
-            <hr />
-        </div>
-        <footer>
+        <footer class="container">
             <?php echo $this->element('sql_dump_alert'); ?>
             <?php echo $this->element('footer'); ?>
         </footer>
     </div>
     <?php
-        $scripts_array = array('jquery-1.7.1', 'bootstrap-alerts', 'bootstrap-tabs');
+        $scripts_array = array('jquery-1.7.1', 'bootstrap-alerts', 'bootstrap-tabs', 'jquery-ui-1.8.17.custom.min', 'jquery.ui.datepicker-es');
         if (isset($requireEditor) && $requireEditor == true) {
             echo $this->Html->scriptBlock('var useCKeditor = true;');
             array_push($scripts_array, 'ckeditor/ckeditor','ckeditor/adapters/jquery');

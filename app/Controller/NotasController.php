@@ -1,9 +1,11 @@
 <?php
 
 class NotasController extends AppController {
-    public $helpers = array('Html', 'Form', 'Time');
+    public $helpers = array('Html', 'Form', 'Time', 'Crumb');
     public $components = array('Session');
     public $name = 'Notas';
+    
+    public $status = array(0 => 'unread', 1 => 'read', 2 => 'hidden');
     
     /*
      * Esta función se ejectuta antes de cada acción del Controlador Notas
@@ -12,12 +14,14 @@ class NotasController extends AppController {
         parent::beforeFilter();
         // Lista de acciones donde no es requirida la autenticación del User.
         //$this->Auth->allow('add', 'login', 'logout');
+        $this->set('status', $this->status);
+        $this->set('title_for_layout', 'Notas');
     }
     
     
-    public function admin_index() {
+    /*public function admin_index() {
         $this->redirect(array('controller' => 'notas', 'action' => 'list', 'admin' => 1));
-    }
+    }*/
     
     /* Lista de Notas 
     public function admin_list() {
@@ -25,7 +29,33 @@ class NotasController extends AppController {
         $this->set('notas', $this->paginate());
     }*/
     
-    public function admin_list($type = 'all', $type_id = 'all') {
+    public function index($type = 'all', $type_id = 'all') {
+        $notas = array();
+        $this->Nota->recursive = 0;
+        if ($type === 'all' && $type_id === 'all') {
+            $notas = $this->paginate('Nota', array('Nota.to_user_id' => $this->Auth->user('id')));
+        } else if ($type != 'all' && $type_id === 'all') {
+            $notas = $this->Nota->find('all', array(
+                        'limit' => 10,
+                        'conditions' => array(
+                            'Nota.type' => $type,
+                            'Nota.to_user_id' => $this->Auth->user('id'))
+                    ));
+        } else {
+            $notas = $this->Nota->find('all', array(
+                        'limit' => 10,
+                        'conditions' => array(
+                            'Nota.type' => $type,
+                            'Nota.type_id' => $type_id,
+                            'Nota.to_user_id' => $this->Auth->user('id'))
+                    ));
+        }
+        $this->set('notas', $notas);
+        $this->set('type_title', $type);
+    }
+    
+    public function admin_index($type = 'all', $type_id = 'all') {
+        
         $notas = array();
         $this->Nota->recursive = 0;
         if ($type === 'all' && $type_id === 'all') {
@@ -42,7 +72,8 @@ class NotasController extends AppController {
                     ));
         }
         $this->set('notas', $notas);
-        $this->set('title', $type_id);
+        $this->set('type_title', $type);
+        $this->render('index');
     }
     
     public function view($id = null) {
@@ -117,6 +148,25 @@ class NotasController extends AppController {
         } else {
             $this->error('Nota no se ha podido borrar.');
             //$this->redirect(array('action' => 'index'));
+        }
+    }
+    
+    public function change($id = null, $status = '') {
+        $this->Nota->id = $id;
+        if (!$this->Nota->exists()) {
+            throw new NotFoundException('Beca no Existe');
+        }
+        if ($this->request->is('post')) {
+            $this->Nota->read(null, $id);
+            $this->Nota->set('status', array_search($status, $this->status));
+            if ($this->Nota->save()) {
+                //$this->Nota->create($nota);
+                //$this->Nota->save();
+                $this->success('Se han guardado los datos.');
+                $this->redirect(array('controller'=> 'users', 'action' => 'dashboard'));
+            } else {
+                $this->error('No se han podido guardar los datos.');
+            }
         }
     }
 }

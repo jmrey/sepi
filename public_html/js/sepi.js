@@ -38,5 +38,14 @@ $(document).ready(function(){
             });
         });
     });
+    $(".nota").alert();
+    $('input.datepicker').each(function () {
+        $(this).datepicker({
+            showButtonPanel : true,
+            dateFormat: 'yy-mm-dd',
+            altFormat: 'dd MM, yy',
+            altField: $(this).siblings('.alternate')
+        });
+    });
 });
 

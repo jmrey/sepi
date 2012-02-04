@@ -1,4 +1,4 @@
-<div class="alert-message <?php echo $type; ?> fade in" data-alert="alert">
-      <a class="close" href="#">×</a>
-    <p><?php echo $message; ?></p>
+<div class="alert <?php echo $type; ?> fade in" data-alert="alert">
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    <?php echo $message; ?>
 </div>

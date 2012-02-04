@@ -1,8 +1,10 @@
-<?php echo $this->Session->flash(); ?>
-<div class="dashboard">
-    <h1>Usuarios</h1>
-    <?php echo $this->element('dashboard_menu'); ?>
-    <table class="users">
+<?php 
+    $this->Crumb->add('Inicio', array('controller' => 'users', 'action' => 'dashboard', 'admin' => $isAdmin));
+    $this->Crumb->add($title_for_layout, array('controller' => 'users', 'action' => 'index', 'admin' => $isAdmin));
+?>
+
+<div class="users content">
+    <table class="table">
         <tr>
             <th>Id</th>
             <th>Nombre</th>
@@ -39,5 +41,5 @@
             </td>
         </tr>
         <?php endforeach; ?>
-    </table>
+        </table>
 </div>

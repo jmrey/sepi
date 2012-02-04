@@ -15,7 +15,7 @@
 <div class="hero-unit">
     <h1>Bienvenidos</h1>
     <p>Les damos la más cordial bienvenida a la Sección de Estudios de Posgrado e Investigación (SEPI) de la Escuela Superior de Cómputo (ESCOM) que acorde a la tradición del Instituto Politécnico Nacional de ser una Institución rectora de la educación tecnológica pública en México y líder en la generación, aplicación, difusión y la transferencia de conocimiento científico y tecnológico; propone como parte de su crecimiento natural en el año 2009 la Maestría en Ciencias en Sistemas  computacionales Móviles, con el objetivo de formar personal altamente calificado y competitivo a nivel internacional, que contribuya a generar, innovar y aplicar la computación móvil en la resolución de las diferentes necesidades del país.</p>
-    <p><?php echo $this->Html->link('Leer más »', '/about', array('class' => 'btn primary large')); ?>
+    <p><?php echo $this->Html->link('Leer más »', '/acerca', array('class' => 'btn primary large')); ?>
 </div>
 <!-- Example row of columns -->
 <!-- <div class="row">

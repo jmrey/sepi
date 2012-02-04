@@ -39,12 +39,13 @@ a {
     }
 }
 
-.dashboard {
-    h1 {
-        font-family: Georgia, Arial;
-        font-size: 24px;
-        font-style: italic;
-        margin: 5px;
+#dashboard {
+    .nav {
+        margin-bottom: 0;
+    }
+    .breadcrumb {
+        border-top: none;
+        .border-radius(0px);
     }
     table {
         tbody th {
@@ -77,6 +78,17 @@ a {
         }
     }
 }
+
+.display{
+    h1 {
+        font-family: Georgia, Arial;
+        font-size: 24px;
+        font-style: italic;
+        margin: 5px;
+        text-transform: capitalize;
+    }
+}
+
 .ipn-header {
     background: darken(@foot-color, 0%);
     padding: 10px 10px 0;
@@ -98,14 +110,15 @@ a {
     }
 }
 
-.form {
+.nota.well {
+    background-color: #dfd !important;
+}
+
+form, .form {
     fieldset {
-        background-color:@bg-form-color;
-        border: darken(@bg-form-color,15) 1px solid;
-        padding:15px;
+        padding:10px;
         legend{
-            background-color: darken(#eef8ff,15);
-            padding:5px;
+            padding:0px;
         }
     }
     .input {
@@ -115,19 +128,19 @@ a {
             font-size: 16px;
             line-height:24px;
             padding:0px 10px;
-            width:200px;
+            width:150px;
+            text-align: right;
         }
         input, select{
-            font-size: 18px;
+            font-size: 16px;
             height: auto;
             width: 300px;
         }
     }
-    .btn, .actions a{
+    .btn, .form-actions a{
         margin:@btn-margin;
     }
     &.in-table {
-        margin-right:180px !important;
         form {
             margin:0px;
         }
@@ -136,9 +149,8 @@ a {
             background-color: transparent;
             display: inline-block;
             float: left;
-            margin:5px 0;
-            padding: 0 0 8px;
-            width: 100%;
+            margin:0;
+            padding:0;
             legend {
                 display: none;
                 font-size: 14px;
@@ -146,14 +158,9 @@ a {
         }
         .actions{
             background-color: transparent;
-            border-top: none;
-            right: 30px;
-            margin: 0;
-            padding: 0;
-            position: absolute;
         }
         .input, .textarea {
-            margin: 0 10px;
+            margin: 0 5px;
             input, textarea {
                 height: 45px;
                 max-height: 50px;

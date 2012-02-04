@@ -1,28 +1,33 @@
 <?php
 
 class UsersController extends AppController {
-    public $helpers = array('Html', 'Form', 'Time');
+    public $uses = array('User', 'Nota');
+    public $helpers = array('Html', 'Form', 'Time', 'Crumb');
     public $components = array('Session','Email');
     public $name = 'Users';
+    //$this->la
     
     /*
      * Esta función se ejectuta antes de cada acción del Controlador Users
      */
     public function beforeFilter() {
         parent::beforeFilter();
+        //$this->layout = 'main';
         // Lista de acciones donde no es requirida la autenticación del User.
         $this->Auth->allow('add', 'login', 'logout');
+        $this->set('title_for_layout', 'Usuarios');
     }
     
     /*
      * Revisa las credenciales del user.
      */
     public function login() {
+        $this->layout = 'pages';
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 $this->redirect($this->Auth->redirect());
             } else {
-                $this->error('Nombre de user o contraseña invalido.');
+                $this->error('Nombre de Usuario o contraseña invalido.');
             }
         } else {
             if($this->Auth->user()) {
@@ -31,6 +36,11 @@ class UsersController extends AppController {
         }
     }
     
+    public function admin_login(){
+        $this->redirect('/login');
+    }
+
+
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
@@ -40,7 +50,7 @@ class UsersController extends AppController {
     }
     
     /* Lista de Users */
-    public function admin_list() {
+    public function admin_index() {
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
     }
@@ -64,10 +74,11 @@ class UsersController extends AppController {
             $this->User->recursive = 0;
             $this->set('user', $this->User->read(null, $id));
         }
-        $this->render('profile');
+        $this->render('view');
     }
     
     public function add() {
+        $this->layout = 'pages';
         if ($this->request->is('post')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
@@ -97,6 +108,10 @@ class UsersController extends AppController {
         }
     }
     
+    public function admin_edit($id = null) {
+        $this->edit($id);
+    }
+    
     public function admin_delete($id = null) {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
@@ -118,6 +133,12 @@ class UsersController extends AppController {
         if (parent::isAdmin($this->Auth->user())) {
             $this->redirect(array('action' => 'dashboard', 'admin' => 1));
         }
+        $this->set('notas', $this->Nota->find('all', array(
+            'limit' => '10',
+            'conditions' => array('Nota.to_user_id' => $this->Auth->user('id'),
+                'Nota.status' => 0)
+        )));
+        $this->set('user',$this->Auth->user());
         $this->set('text', 'NOADMIN');
     }
     
@@ -125,7 +146,6 @@ class UsersController extends AppController {
         if (!parent::isAdmin($this->Auth->user())) {
             $this->redirect(array('action' => 'dashboard', 'admin' => 0));
         }
-        $this->set('user',$this->Auth->user());
         $this->set('text','ADMIN');
     }
     

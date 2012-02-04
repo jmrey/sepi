@@ -1,7 +1,7 @@
 <?php
 
 class DocumentosController extends AppController {
-    public $helpers = array('Html', 'Form', 'Number');
+    public $helpers = array('Html', 'Form', 'Number', 'Crumb');
     public $components = array('Session','Email');
     public $name = 'Documentos';
     
@@ -13,6 +13,7 @@ class DocumentosController extends AppController {
         parent::beforeFilter();
         // Lista de acciones donde no es requirida la autenticación del Usuario.
         $this->Auth->allow('add', 'login', 'logout');
+        $this->set('title_for_layout', 'Documentos');
     }
     
     public function index() {
@@ -98,8 +99,8 @@ class DocumentosController extends AppController {
                             // create unique filename and upload file  
                             ini_set('date.timezone', 'Europe/London');  
                             $now = date('Y-m-d-His');  
-                            $full_url = $folder_url.'/'.$now.$filename;  
-                            $url = $rel_url.'/'.$now.$filename;  
+                            $full_url = $folderUrl .'/'.$now . $filename;  
+                            $url = $relativeUrl.'/'. $now . $filename;  
                             $success = move_uploaded_file($file['tmp_name'], $url);
                         }
                         

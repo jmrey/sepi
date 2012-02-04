@@ -2,7 +2,7 @@
 
 class ContenidosController extends AppController {
     public $name = 'Contenidos';
-    public $helpers = array('Html', 'Form');
+    public $helpers = array('Html', 'Form', 'Crumb');
     public $components = array('Session');
     
     
@@ -12,6 +12,7 @@ class ContenidosController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('display', 'announcements');
+        $this->set('title_for_layout', 'Contenidos');
     }
     
     public function index() {
@@ -32,6 +33,7 @@ class ContenidosController extends AppController {
             'conditions' => array('Contenido.' . $field => $query)
         )));
         $this->set('title', $query);
+        $this->layout = 'pages';
     }
     
     public function admin_view($id = null) {
@@ -57,10 +59,10 @@ class ContenidosController extends AppController {
             //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
             $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
             if ($this->Contenido->save($this->request->data)) {
-                $this->Session->setFlash('Se ha guardado la contenido');
+                $this->success('Se ha guardado la contenido');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash('Ha habido un problema. Intenta más tarde.');
+                $this->error('Ha habido un problema. Intenta más tarde.');
             }
         }
         $this->render('add');
@@ -73,10 +75,10 @@ class ContenidosController extends AppController {
             //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
             $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
             if ($this->Contenido->save($this->request->data)) {
-                $this->Session->setFlash('Se ha guardado la contenido');
+                $this->success('Se ha guardado la convocatoria.');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash('Ha habido un problema. Intenta más tarde.');
+                $this->error('Ha habido un problema. Intenta más tarde.');
             }
         }
         $this->render('add_convocatory');
@@ -97,10 +99,10 @@ class ContenidosController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Contenido->save($this->request->data)) {
-                $this->Session->setFlash('Se han guardado los datos.');
+                $this->success('Se han guardado los datos.');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash('No se han podido guardar los datos.');
+                $this->error('No se han podido guardar los datos.');
             }
         } else {
             $this->request->data = $this->Contenido->read(null, $id);
@@ -119,14 +121,15 @@ class ContenidosController extends AppController {
             throw new NotFoundException('Usuario Invalido');
         }
         if ($this->Contenido->delete()) {
-            $this->Session->setFlash('The Contenido with id: ' . $id . ' has been deleted.');
+            $this->info('The Contenido with id: ' . $id . ' has been deleted.');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash('Contenido no se ha podido borrar.');
+        $this->error('Contenido no se ha podido borrar.');
         $this->redirect(array('action' => 'index'));
     }
     
     public function announcements() {
+        $this->layout = 'pages';
         $this->set('convocatorias', $this->Contenido->find('all', array(
             'limit' => 10,
             'conditions' => array('Contenido.type' => 'convocatoria')

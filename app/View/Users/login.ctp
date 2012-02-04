@@ -1,26 +1,26 @@
-<div class="users form">
+<div class="users content">
 <?php    
     echo $this->Session->flash('auth', array(
         'params' => array('type' => 'warning'),
         'element' => 'alert'
     ));
 ?>
-<?php echo $this->Form->create('User');?>
+<?php echo $this->Form->create('User', array('class' => 'well form-inline'));?>
 <fieldset>
     <legend><?php echo __('Ingresa tu nombre de User y contraseña.'); ?></legend>
     <?php
         echo $this->Session->flash();
         echo $this->Form->input('username', array(
-            'label' => 'Nombre de User'
+            'label' => 'Nombre de Usuario:'
         ));
         echo $this->Form->input('password', array(
-            'label' => 'Contraseña'
+            'label' => 'Contraseña:'
         ));
     ?>
 </fieldset>
-<div class="actions">
+<div class="form-actions">
         <?php 
-            echo $this->Form->end(array('label' => 'Iniciar Sesión', 'class' => 'btn large success', 'div' => false));
+            echo $this->Form->end(array('label' => 'Iniciar Sesión', 'class' => 'btn btn-large btn-success', 'div' => false));
             echo $this->Html->link('Registrarme', '/signup');
             echo $this->Html->link('¿Olvidaste tu constraseña?', '/');
         ?>

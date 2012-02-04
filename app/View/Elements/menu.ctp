@@ -1,4 +1,4 @@
-<ul class="<?php echo $class; ?>">
+<ul class="nav <?php echo $class; ?>">
 <?php
     $out = array();
     $activeLi = '<li class="active">';
@@ -13,7 +13,10 @@
             $matches = (isset($val['matches']) ? $val['matches'] : array());
             $link = $this->Html->link($title, $val['url']);
             while ($i < count($matches)) {
+                //pr(substr($this->here, strlen($this->base)));//
                 if (preg_match('/' . preg_quote($matches[$i], '/') .'/', substr($this->here, strlen($this->base)))) {
+                //if (preg_match('/' . str_replace('/', '\/', $matches[$i]) .'/', substr($this->here, strlen($this->base)))) {    
+                //if (preg_match($matches[$i], substr($this->here, strlen($this->base)))) {
                     $match = true;
                 }
                 $i++;

@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
-    
+    //public $helpers = array('Crumb');
     /*
      * Array que contiene los componentes que necesita el controlador, en este caso, los componentes
      * que necesita la clase base AppController.
@@ -48,11 +48,16 @@ class AppController extends Controller {
         )
     );
     
+    //public $helpers = array('Crumb');
+    
     /**
      * Función llamada antes de ejecutar cada acción del controlador.
      */
     public function beforeFilter() {
         $this->Auth->allow('display');
+        if ($this->request['controller'] === 'pages') {
+            $this->layout = 'pages';
+        }
         $this->set('authUser', $this->Auth->user());
         $this->set('isAdmin', $this->Auth->user('role') === 'admin');
     }
@@ -70,7 +75,7 @@ class AppController extends Controller {
  
             if (defined('WEBROOT_DIR')) {
                 // Array de los archivos less.
-                $css_array = array('bootstrap', 'main');
+                $css_array = array('bootstrap', 'responsive', 'main');
                 
 		for ($i = 0; $i < count($css_array); $i++) {
                     // Establece el directorio donde está el archivo LESS.
@@ -114,7 +119,7 @@ class AppController extends Controller {
      * Mensajes Flash.
      */
     public function alert($message, $type = 'warning', $key = null) {
-        $this->Session->setFlash($message, 'alert', array('type' => $type));
+        $this->Session->setFlash($message, 'alert', array('type' => 'alert-' . $type));
     }
     
     public function error($message) {
