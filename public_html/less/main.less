@@ -34,12 +34,13 @@ a {
     &.danger {
         color: @red;
     }
-    &.btn {
-        margin: @btn-margin;
-    }
 }
 
 #dashboard {
+    /*header {
+        display:inline-block;
+        width: 100%;
+    }*/
     .nav {
         margin-bottom: 0;
     }
@@ -84,28 +85,32 @@ a {
         font-family: Georgia, Arial;
         font-size: 24px;
         font-style: italic;
-        margin: 5px;
         text-transform: capitalize;
     }
 }
 
 .ipn-header {
     background: darken(@foot-color, 0%);
-    padding: 10px 10px 0;
+    margin-bottom: 18px;
+    padding: 0;
     white-space: nowrap;
     .border-radius(6px);
     div.left {
+        padding: 15px 15px;
         position: absolute;
         text-indent: 5px;
     }
     div.right {
-        padding-top: 0px;
+        padding:5px 15px;
         position: relative;
+        text-align: right;
+        img {
+            margin-top: 5px;
+        }
         h3, h4 {
             padding-right: 90px;
             position: relative;
-            text-align: right;
-            top:20px;
+            top:40px;
         }
     }
 }
@@ -136,6 +141,16 @@ form, .form {
             height: auto;
             width: 300px;
         }
+        .error-message {
+            background-color: #F2DEDE;
+            border-color: #EED3D3;
+            color: #B94A48;
+            .border-radius(4px);
+            display: inline-block;
+            margin: 0 5px 0 15px;
+            padding: 3px 15px;
+            vertical-align: middle;
+        }
     }
     .btn, .form-actions a{
         margin:@btn-margin;
@@ -158,6 +173,8 @@ form, .form {
         }
         .actions{
             background-color: transparent;
+            float: right;
+            margin-right: 20px;
         }
         .input, .textarea {
             margin: 0 5px;
@@ -180,6 +197,11 @@ form, .form {
         }
     }
 }
+
+.breadcrumb ul {
+    display:inline-block;
+    margin: 0;
+}
 .email .input {
     label {
         font-size:14px;
@@ -197,10 +219,12 @@ footer {
     bottom: 5px;
     position: fixed;
     text-align: center;
-    //width: 100%;
+    width: 100%;
 }
 
 div.sql_alert {
+    left: 0;
     position: absolute;
     bottom: 50px;
+    margin: 20px;
 }

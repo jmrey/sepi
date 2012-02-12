@@ -118,18 +118,18 @@ a:hover {
   margin-left:2.127659574%;
 }
 .row-fluid > [class*="span"]:first-child { margin-left:0; }
-.row-fluid .span1 { width:0.06382978723%; }
-.row-fluid .span2 { width:0.1489361702%; }
-.row-fluid .span3 { width:0.23404255317%; }
-.row-fluid .span4 { width:0.31914893614%; }
-.row-fluid .span5 { width:0.40425531911%; }
-.row-fluid .span6 { width:0.48936170208%; }
-.row-fluid .span7 { width:0.57446808505%; }
-.row-fluid .span8 { width:0.65957446802%; }
-.row-fluid .span9 { width:0.74468085099%; }
-.row-fluid .span10 { width:0.82978723396%; }
-.row-fluid .span11 { width:0.91489361693%; }
-.row-fluid .span12 { width:0.9999999999%; }
+.row-fluid .span1 { width:6.382978723%; }
+.row-fluid .span2 { width:14.89361702%; }
+.row-fluid .span3 { width:23.404255317%; }
+.row-fluid .span4 { width:31.914893614%; }
+.row-fluid .span5 { width:40.425531911%; }
+.row-fluid .span6 { width:48.936170208%; }
+.row-fluid .span7 { width:57.446808505%; }
+.row-fluid .span8 { width:65.957446802%; }
+.row-fluid .span9 { width:74.468085099%; }
+.row-fluid .span10 { width:82.978723396%; }
+.row-fluid .span11 { width:91.489361693%; }
+.row-fluid .span12 { width:99.99999999%; }
 .container {
   width:940px;
   margin-left:auto;
