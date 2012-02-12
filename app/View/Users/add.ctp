@@ -17,7 +17,7 @@
     <fieldset>
         <legend><?php echo 'Perfil'; ?></legend>
         <?php
-            echo $this->Form->input('name', array(
+            echo $this->Form->input('fullname', array(
                 'label' => 'Nombre Completo:'
             ));
             echo $this->Form->input('role', array(

@@ -6,14 +6,13 @@
 <div class="users content">
     <table class="table">
         <tr>
-            <th>Id</th>
+            <th>#</th>
             <th>Nombre</th>
             <th>Alias</th>
             <th>Email</th>
             <th>Rol</th>
             <th>CURP</th>
             <th>RFC</th>
-            <th>Registrado</th>
             <th>Acciones</th>
         </tr>
 
@@ -22,7 +21,10 @@
         <?php  $user = $u['User']?>
         <tr>
             <td><?php echo $user['id']; ?></td>
-            <td><?php echo $user['name']; ?></td>
+            <td>
+                <?php echo $this->Html->link($user['fullname'],
+                    array('controller' => 'users', 'action' => 'view', $user['id'])); ?>
+            </td>
             <td>
                 <?php echo $this->Html->link($user['username'],
                     array('controller' => 'users', 'action' => 'view', $user['id'])); ?>
@@ -32,11 +34,10 @@
                 <?php echo $this->Html->link('Enviar correo', array('action' => 'email', $user['id']), array('class' => 'success')); ?>
             </td>
             <td><?php echo ucwords($user['role']); ?></td>
-            <td><?php echo ($user['curp'] == NULL)?'---':$user['curp']; ?></td>
-            <td><?php echo ($user['rfc'] == NULL)?'---':$user['rfc']; ?></td>
-            <td><?php echo $this->Time->niceShort($user['created']); ?></td>
+            <td><?php echo ($user['curp'] == null) ? '-' : $user['curp']; ?></td>
+            <td><?php echo ($user['rfc'] == null) ? '-' : $user['rfc']; ?></td>
             <td>
-                <?php echo $this->Html->link('Editar', array('controller' => 'users', 'action' => 'edit', $user['id'], 'admin' => 0)); ?>
+                <?php echo $this->Html->link('Editar', array('controller' => 'users', 'action' => 'edit', $user['id'], 'admin' => $isAdmin)); ?>
                 <?php echo $this->Form->postLink('Borrar', array('action' => 'delete', $user['id']), array('confirm' => '¿Estás seguro?', 'class' => 'danger')); ?>
             </td>
         </tr>

@@ -1,8 +1,8 @@
 <div class="users content">
     <?php 
         $this->Crumb->add('Inicio', array('controller' => 'users', 'action' => 'dashboard', 'admin' => $isAdmin));
-        $this->Crumb->add($title_for_layout, array('controller' => 'users', 'action' => 'index', 'admin' => $isAdmin));
-        $this->Crumb->add('Editar', array('controller' => 'users', 'action' => 'edit', $this->request->data['User']['id'], 'admin' => $isAdmin));
+        $this->Crumb->add('Mi Perfil', array('controller' => 'users', 'action' => 'profile', 'admin' => $isAdmin));
+        $this->Crumb->add('Editar', array('controller' => 'users', 'action' => 'edit', 'admin' => $isAdmin));
     ?>
     <div class="form">
     <?php echo $this->Form->create('User', array('action' => 'edit', 'class' => 'well form-inline')); ?>
@@ -17,17 +17,20 @@
                 echo $this->Form->input('email', array(
                     'label' => 'Correo Electrónico'
                 ));
+                echo $this->Form->input('fullname', array(
+                    'label' => 'Nombre Completo'
+                ));
+                /*echo $this->Form->input('password', array(
+                    'label' => 'Contraseña'
+                ));*/
                 echo $this->Form->input('rfc', array(
                     'label' => 'RFC'
                 ));
                 echo $this->Form->input('curp', array(
                     'label' => 'CURP'
                 ));
-                echo $this->Form->input('name', array(
-                    'label' => 'Nombre Completo'
-                ));
-                echo $this->Form->input('role', array(
-                    'label' => 'Soy'));
+                /*echo $this->Form->input('role', array(
+                    'label' => 'Soy'));*/
             ?>
         </fieldset>
         <div class="form-actions">
