@@ -35,6 +35,7 @@
         /***ALIAS**/
         Router::connect('/signup', array('controller' => 'users', 'action' => 'add'));
         Router::connect('/dashboard', array('controller' => 'users', 'action' => 'dashboard'));
+        Router::connect('/profile', array('controller' => 'users', 'action' => 'profile'));
         Router::connect('/admin/dashboard', array('controller' => 'users', 'action' => 'dashboard', 'admin' => 1));
         Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
         Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));

@@ -6,8 +6,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
+                <?php if ($isAdmin): ?>
                 <th>Usuario</th>
+                <?php endif; ?>
                 <th>Tipo</th>
                 <th>Estado</th>
                 <th>Empieza</th>
@@ -17,44 +19,37 @@
         </thead>
         <tbody>
             <?php 
+                $count = 0;
                 foreach ($becas as $b):
                     $beca = $b['Beca'];
-                    $user = $b['User']; ?>
+                    if($isAdmin) $user = $b['User']; 
+                ?>
             <tr class="no-border">
-                <td><?php echo $beca['id']; ?></td>
+                <td><?php echo ($isAdmin) ? $beca['id'] : ++$count; ?></td>
+                <?php if ($isAdmin) :?>
                 <td>
                     <?php echo $this->Html->link($user['username'],
                         array('controller' => 'users', 'action' => 'view', $beca['user_id'])); ?>
                 </td>
+                <?php endif; ?>
                 <td><?php echo strtoupper($beca['type']); ?></td>
-                <td><?php echo $beca['status']; ?></td>
-                <td><?php echo $beca['begin_date']; ?></td>
-                <td><?php echo $beca['end_date']; ?></td>
+                <td><?php echo $beca['status'] ? 'Aprobada' : 'En revisón'; ?></td>
+                <td><?php echo $this->Time->format('F j, Y', $beca['begin_date']); ?></td>
+                <td><?php echo $this->Time->format('F j, Y', $beca['end_date']); ?></td>
                 <td>
-                    <ul>
-                        <?php 
-                            if(isset($authUser) && $authUser['role'] === 'admin') {
+                    <?php 
+                        if($isAdmin && !$beca['status']) {
+                            echo $this->Form->postLink('Aprobar',
+                                array('action' => 'change', $beca['id'], 'aprobada', 'admin' => $isAdmin),
+                                array('confirm' => '¿Está seguro?', 'class' => 'success'));
+
+                        }
+                        echo $this->Html->link('Notas', '#',
+                                array('class' => 'toggle-notes'));
+                        echo $this->Form->postLink('Cancelar',
+                            array('action' => 'delete', $beca['id'], 'admin' => 0),
+                            array('confirm' => '¿Está seguro?', 'class' => 'danger'));
                         ?>
-                        <li>            
-                             <?php   echo $this->Form->postLink('Aprobar',
-                                    array('action' => 'change', $beca['id'], 'aprobada', 'admin' => 0),
-                                    array('confirm' => '¿Está seguro?', 'class' => 'success'));
-                             ?>
-                        </li>
-                        <?php
-                            }
-                        ?>
-                        <li>
-                            <?php echo $this->Html->link('Notas', '#',
-                                    array('class' => 'toggle-notes')); ?>
-                        </li>
-                        <li>
-                            <?php echo $this->Form->postLink('Cancelar',
-                                array('action' => 'delete', 'admin' => 0, $beca['id']),
-                                array('confirm' => '¿Está seguro?', 'class' => 'danger'));
-                            ?>
-                        </li>
-                    <ul>
                 </td>
             </tr>
             <tr class="tr-notes">

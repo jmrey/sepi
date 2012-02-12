@@ -31,25 +31,17 @@
             <td><?php echo $status[$beca['status']]; ?></td>
             <td>
                 <ul>
-                    <?php 
-                        if(isset($authUser) && $authUser['role'] === 'admin') {
-                    ?>
-                    <li>            
-                         <?php   echo $this->Form->postLink('Aprobar',
-                                array('action' => 'delete', 'admin' => 0, $beca['id']),
-                                array('confirm' => '¿Está seguro?', 'class' => 'success'));
-                         ?>
-                    </li>
-                    <?php
-                        }
-                    ?>
-                    <li>
-                        <?php echo $this->Form->postLink('Cancelar',
+                <?php 
+                    if(isset($authUser) && $authUser['role'] === 'admin') {
+                        echo $this->Form->postLink('Aprobar',
                             array('action' => 'delete', 'admin' => 0, $beca['id']),
-                            array('confirm' => '¿Está seguro?', 'class' => 'danger'));
-                        ?>
-                    </li>
-                <ul>
+                            array('confirm' => '¿Está seguro?', 'class' => 'success'));
+                    }
+                    
+                    echo $this->Form->postLink('Cancelar',
+                        array('action' => 'delete', 'admin' => 0, $beca['id']),
+                        array('confirm' => '¿Está seguro?', 'class' => 'danger'));
+                ?>
             </td>
         </tr>
         <tr class="tr-notes">

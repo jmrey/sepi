@@ -133,7 +133,8 @@ class NotasController extends AppController {
         }
     }
     
-    public function admin_delete($id = null) {
+    public function delete($id = null) {
+        $this->autoRender = false;
         if (!($this->request->is('post') || $this->request->is('delete'))) {
             throw new MethodNotAllowedException();
             //$this->Session->setFlash('The nota with id: ' . $id . ' has been deleted.');
