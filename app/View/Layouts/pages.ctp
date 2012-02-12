@@ -12,14 +12,14 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <meta name="author" content="" />
     <?php
         echo $this->Html->meta('icon');
-        echo $this->Html->css(array('bootstrap', 'responsive', 'main', 'flick/jquery-ui-1.8.17.custom'));
+        echo $this->Html->css(array('bootstrap', 'main', 'flick/jquery-ui-1.8.17.custom'));
         echo $scripts_for_layout;
     ?>
 </head>
 <body>
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-            <div class="container max-width">
+            <div class="container-fluid">
                 <?php echo $this->Html->link('SEPI', array('controller' => 'pages', 'action' => 'display', 'welcome', 'admin' => 0), array('class' => 'brand')); ?>
                 <?php 
                     echo $this->element('menu', array(
@@ -29,40 +29,41 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
                             'Acerca' => '/acerca',
                             'Contacto' => '/contacto'                            
                         ),
-                        'class' => 'nav'
+                        'class' => ''
                     ));
                     
                     echo $this->element('menu', array(
                         'menu' => array(
                             'Registrar' => array('url' => '/signup', 'visibleTo' => 'guests'),
                             'Iniciar Sesión' => array('url' => '/login', 'visibleTo' => 'guests'),
-                            $authUser['name'] => array('url' => '/dashboard', 'visibleTo' => 'auth'),
+                            $authUser['username'] => array('url' => '/dashboard', 'visibleTo' => 'auth'),
                             'Cerrar Sesión' => array('url' => '/logout', 'visibleTo' => 'auth')
                         ),
-                        'class' => 'nav right'
+                        'class' => 'right'
                     ));
                 ?>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="span2">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div id="menu-wrap" class="span2">
                 <div class="well sidebar-nav">
                     <?php echo $this->element('sidebar'); ?>
                 </div>
             </div>
-            <div class="span10">
+            <div id="content-wrap" class="span10">
                 <?php echo $this->Session->flash(); ?>
                 <?php echo $content_for_layout ?>
                 <hr />
             </div>
         </div>
-        <footer class="container">
+        
+    </div>
+    <footer>
             <?php echo $this->element('sql_dump_alert'); ?>
             <?php echo $this->element('footer'); ?>
-        </footer>
-    </div>
+    </footer>
     <?php
         $scripts_array = array('jquery-1.7.1', 'bootstrap-alerts', 'bootstrap-tabs', 'jquery-ui-1.8.17.custom.min', 'jquery.ui.datepicker-es');
         if (isset($requireEditor) && $requireEditor == true) {
