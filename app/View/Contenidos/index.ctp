@@ -45,10 +45,9 @@
         <?php endforeach; ?>
     </table>
     <div class="form-actions">
-        <?php 
-            echo $this->Html->link('Agregar Contenido', array('controller' => 'contenidos', 'action' => 'add', 'admin' => 1),
-                array('class' => 'btn btn-primary btn-large')); 
-            echo $this->Html->link('Agregar Convocatoria', array('controller' => 'contenidos', 'action' => 'add_convocatory', 'admin' => 1),
+        <?php echo $this->Html->link('Agregar Contenido', array('controller' => 'contenidos', 'action' => 'add', 'admin' => 1),
+                array('class' => 'btn btn-primary btn-large')); ?>
+        <?php echo $this->Html->link('Agregar Convocatoria', array('controller' => 'contenidos', 'action' => 'add_convocatory', 'admin' => 1),
                 array('class' => 'btn btn-primary btn-large')); 
         ?>
     </div>

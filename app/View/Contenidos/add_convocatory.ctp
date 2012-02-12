@@ -23,13 +23,13 @@
             echo $this->Form->hidden('type', array(
                 'default' => 'convocatoria'
             ));
-            echo $this->Form->input('created', array(
+            echo $this->Form->input('begin_date', array(
                 'label' => 'Inicia',
                 'class' => 'datepicker',
                 'type' => 'text', 
                 'after' => '<input type="text" class="alternate">'
             ));
-            echo $this->Form->input('modified', array(
+            echo $this->Form->input('end_date', array(
                 'label' => 'Termina',
                 'class' => 'datepicker',
                 'type' => 'text',

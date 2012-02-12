@@ -46,15 +46,15 @@ class ContenidosController extends AppController {
     }
     
     public function add() {
-        if (parent::isAdmin($this->Auth->user())) {
+        if (parent::isAdmin()) {
             $this->redirect(array('action' => 'add', 'admin' => 1));
         }
         $this->warning('No tienes los permisos suficientes para entrar a esta area.');
     }
     
-    public function admin_add() {
+    public function admin_add($type = null) {
         $this->set('requireEditor',true);
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             $this->Contenido->create();
             //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
             $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
@@ -64,6 +64,9 @@ class ContenidosController extends AppController {
             } else {
                 $this->error('Ha habido un problema. Intenta más tarde.');
             }
+        } else {
+            $this->set('type', $type);
+            //debug($this->request->data);
         }
         $this->render('add');
     }
