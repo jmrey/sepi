@@ -41,7 +41,7 @@ class AppController extends Controller {
     public $components = array(
         'Session',
         'Auth' => array(
-            'authError' => "Necesitas iniciar Sesión para acceder.",
+            'authError' => "No tienes los suficientes privilegios para esta acción.",
             'loginRedirect' => array('controller' => 'users', 'action' => 'dashboard'),
             'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'welcome'),
             'authorize' => array('Controller')
@@ -58,8 +58,10 @@ class AppController extends Controller {
         if ($this->request['controller'] === 'pages') {
             $this->layout = 'pages';
         }
+        //pr($this->Auth->user());
         $this->set('authUser', $this->Auth->user());
-        $this->set('isAdmin', $this->Auth->user('role') === 'admin');
+        //$this->set('isAdmin', $this->Auth->user('role') === 'admin');
+        $this->set('isAdmin', $this->isAdmin());
     }
     
     /**
@@ -97,8 +99,11 @@ class AppController extends Controller {
     /*
      * Revisa si el usuario tiene como rol 'Administrador'.
      */
-    public function isAdmin($user) {
-        if (isset($user['role']) && $user['role'] === 'admin') {
+    public function isAdmin($user = null) {
+        if ($user === null) {
+            $user = $this->Auth->user();
+        }
+        if (isset($user['role']) && $user['role'] == 'admin') {
             return true;
         }
         return false;
@@ -108,11 +113,12 @@ class AppController extends Controller {
      * Revisa si el User ha iniciado sesión.
      */
     public function isAuthorized($user) {
-        if(isset($user)) {
+        /*if(isset($user)) {
             return true;
         } else {
             return false;
-        }
+        }*/
+        return isset($user);
     }
     
     /*

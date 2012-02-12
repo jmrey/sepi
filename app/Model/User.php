@@ -14,28 +14,53 @@ class User extends AppModel {
     
     public $validate = array(
         'username' => array(
-            'required' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Nombre de usuario es requerido'
+            'validateUserame' => array(
+                'rule' => array('alphaNumeric'),
+                'required' => true,
+                'message' => 'Nombre usuario debe contener letras y números.'
+            ),
+            'uniqueUsername' => array(
+                'rule' => 'isUnique',
+                'message' => 'El nombre de usuario no está disponible.'
+            ),
+            'between' => array(
+                'rule' => array('between', 3, 15),
+                'message' => 'Entre 3 y 15 caracteres.'
             )
         ),
-        'name' => array(
+        'fullname' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
-                'message' => 'Nombre de usuario es requerido'
+                'require' => true,
+                'message' => 'Nombre Completo es requerido.'
             )
         ),
         'password' => array(
             'required' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Contraseña es requerida'
+                'rule' => array('minLength', 6),
+                'allowEmpty' => false,
+                'required' => true,
+                'message' => 'La contraseña debe contener 6 caracteres como mínimo.'
+            )
+        ),
+        'email' => array(
+            'validateEmail' => array(
+                'rule' => 'email',
+                'required' => true,
+                'allowEmpty' => false,
+                'message' => 'Por favor ingresa un email válido.'
+            ),
+            'uniqueEmail' => array(
+                'rule' => 'isUnique',
+                'message' => 'Ya ha sido registrado esta cuenta de correo.'
             )
         ),
         'role' => array(
-            'valid' => array(
-                'rule' => array('inList', array('profesor', 'alumno', 'administrativo', 'admin')),
-                'message' => 'Por favor ingresa un rol válido.',
-                'allowEmpty' => false
+            'allowedRole' => array(
+                'rule' => array('inList', array('admin', 'alumno', 'profesor', 'administrativo')),
+                'message' => 'Por favor selecciona un rol válido.',
+                'allowEmpty' => false,
+                'required' => true
             )
         )
     );
