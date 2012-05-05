@@ -18,7 +18,6 @@ class NotasController extends AppController {
         $this->set('title_for_layout', 'Notas');
     }
     
-    
     /*public function admin_index() {
         $this->redirect(array('controller' => 'notas', 'action' => 'list', 'admin' => 1));
     }*/
@@ -148,7 +147,6 @@ class NotasController extends AppController {
             $this->redirect(array('action' => 'index', 'admin' => 1));
         } else {
             $this->error('Nota no se ha podido borrar.');
-            //$this->redirect(array('action' => 'index'));
         }
     }
     

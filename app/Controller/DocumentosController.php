@@ -13,7 +13,7 @@ class DocumentosController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         // Lista de acciones donde no es requirida la autenticación del Usuario.
-        $this->Auth->allow('add', 'login', 'logout');
+        $this->Auth->allow('add', 'login', 'logout','upload');
         $this->set('title_for_layout', 'Documentos');
     }
     
@@ -65,50 +65,94 @@ class DocumentosController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
     
-    public function view() {
-        $this->set('documentId', '120211003710-a3728bd97ffc402a87b2e42c19dba049');
+    public function view($id = null) {
+        $this->Documento->id = $id;
+        if (!$this->Documento->exists()) {
+            throw new NotFoundException('Documento que buscas no existe.');
+        } else {
+            $this->Documento->recursive = -1;
+            $documento = $this->Documento->read(null, $id);
+            $this->set('documento', $documento);
+        }
+        //$this->set('documentId', '120211003710-a3728bd97ffc402a87b2e42c19dba049');
     }
     
     public function upload_issuu() {
         if ($this->request->is('post')) {
-            $action = $this->request->data['Documento']['action'];
-            $file = $this->request->data['Documento']['file'];
-            $this->Issuu->openAction($action);
-            $this->Issuu->setFile($file);
-            $this->Issuu->executeAction();
-            debug($this->Issuu->getResponse()); die;
+            $data = $this->request->data;
+            
+            $this->Issuu->openAction($data['action']);
+            $this->Issuu->setFile($data['Documento']['file']);
+            $this->Issuu->name($data['Documento']['name']);
+            
+            if ($this->validateField('name', $this->Issuu->getName())) {
+                if ($this->Issuu->executeAction()) {
+                    $docData = $this->Issuu->getResponseDoc();
+                    if ($this->saveIssuuDocument($docData)) {
+                        $this->info('Se ha guardado el documento con el nombre ' . $docData['name'] . '.');
+                    } else {
+                        $this->error('Ha ocurrido un error. No se han podido guardar los datos.');
+                    }
+                }
+                else {
+                    $this->error('Error al subir el archivo. Intenta de nuevo.');
+                }
+            }
+
             $this->Issuu->closeAction();
         }
     }
     
+    private function saveIssuuDocument($issuDocument = array()) {
+        $data = array();
+        $this->Documento->create();
+        $data['user_id'] = $this->Auth->user('id');
+        $data['documentId'] = $issuDocument['documentId'];
+        $data['originalName'] = $issuDocument['orgDocName'];
+        $data['issuuAccount'] = $issuDocument['username'];
+        $data['name'] = $issuDocument['name'];
+        $data['type'] = $issuDocument['orgDocType'];
+        $data['size'] = $issuDocument['size'];
+        $data['url'] = 'http://issuu.com/' . $data['issuuAccount'] . '/docs/' . $data['name'];
+        
+        return $this->Documento->save($data);
+    }
+    
+    /**
+     * Valida un campo del Modelo.
+     * 
+     * @param string $field
+     * @param string $value
+     * @return boolean 
+     */
+    private function validateField($field = '', $value = '') {
+        $this->Documento->create();
+        $this->Documento->set($field, $value);
+        
+        if (!$this->Documento->validates()) {
+            $this->error('Datos invalidos. Verifica de nuevo.');
+            return false;
+        }
+        return true;
+    } 
+
     public function upload() {
         
         // Los archivos sólo se pueden cargar mediante POST.
         if ($this->request->is('post')) {
-            
-            $results = $this->uploadFile($this->folderPath, $this->request->data['Documento']);
-            $this->set('results', $results);
-            //pr($results);
-            if (!(array_key_exists('errors', $results) || array_key_exists('nofiles', $results))) {
-                $this->Documento->create();
-                $data = $this->request->data['Documento']['submittedfile'];
-                $data['user_id'] = $this->Auth->user('id');
-                $data['url'] = 'files/' . $data['name'];
-                if ($this->Documento->save($data)) {
-                    $this->info('Se han guardado los datos.');
-                    //$this->redirect(array('action' => 'index'));
-                } else {
-                    $this->error('No se han podido guardar los datos.');
-                }
+            $this->layout = false;
+            if(isset($_FILES['ax-files'])) 
+            {
+                pr('ewrwererwrwerwerwerwer');
+            } elseif (isset($_GET['ax-file-name'])) {
+                pr('asdadasdasdasd');
+                pr($_GET);
+                pr($this->request->data);
             } else {
-                $this->error($results['errors'][0]);
-            }
+                pr('123123132132131');
+            }  
         } elseif ($this->request->is('get')) {
-            $apiKey = '5h2jdh47dz9y4ddj5wckuv4g1qipbn5p';
-            $secret = 'qp7dsg1p6so5xlr3imh8sxgy5rh5bhaz';
-            $signature = md5($secret . 'action' . 'issuu.document.upload' . 'apiKey' . $apiKey . 'formatjson');
-            $this->set('signature', $signature);
-            $this->set('apiKey', $apiKey);
+            $this->set('requireFileupload', true);
         }
     }
     

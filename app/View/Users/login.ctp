@@ -20,9 +20,10 @@
 </fieldset>
 <div class="form-actions">
         <?php 
-            echo $this->Form->end(array('label' => 'Iniciar Sesión', 'class' => 'btn btn-large btn-success', 'div' => false));
+            echo $this->Form->submit('Iniciar Sesión', array('class' => 'btn btn-large btn-success', 'div' => false));
             echo $this->Html->link('Registrarme', '/signup');
             echo $this->Html->link('¿Olvidaste tu constraseña?', '/');
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

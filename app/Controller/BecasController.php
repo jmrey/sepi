@@ -34,7 +34,7 @@ class BecasController extends AppController {
         $this->Beca->recursive = 0;
         $becas = $this->Beca->find('all');
         $this->set('becas', $becas);
-        
+        $this->set('requireDropkick', true);
         $this->render('index');
     }
     

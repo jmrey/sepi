@@ -5,7 +5,7 @@
         $this->Crumb->add('Nueva', array('controller' => 'becas', 'action' => 'add'));
     ?>
     
-    <?php echo $this->Form->create('Beca', array('class' => 'form-inline')); ?>
+    <?php echo $this->Form->create('Beca', array('class' => 'well form-inline')); ?>
         <fieldset>
             <legend><?php echo 'Registrar Beca'; ?></legend>
             <?php

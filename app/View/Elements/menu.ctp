@@ -10,7 +10,7 @@
             $out[] = (($match === true) ? $activeLi : '<li>') . $link . '</li>';
         } else if (is_array($val)) {
             $i = 0;
-            $matches = (isset($val['matches']) ? $val['matches'] : array());
+            $matches = (isset($val['matches']) ? $val['matches'] : array($val['url']));
             $link = $this->Html->link($title, $val['url']);
             while ($i < count($matches)) {
                 //pr(substr($this->here, strlen($this->base)));//

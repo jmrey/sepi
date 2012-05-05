@@ -37,8 +37,11 @@
                             array('action' => 'delete', 'admin' => 0, $beca['id']),
                             array('confirm' => '¿Está seguro?', 'class' => 'success'));
                     }
+                    echo $this->Form->postLink('Marcar como leída',
+                        array('controller' => 'notas', 'action' => 'change', $beca['id'], 'read', 'admin' => 0),
+                        array('confirm' => '¿Está seguro?', 'class' => 'success'));
                     
-                    echo $this->Form->postLink('Cancelar',
+                    echo $this->Form->postLink('Borrar',
                         array('action' => 'delete', 'admin' => 0, $beca['id']),
                         array('confirm' => '¿Está seguro?', 'class' => 'danger'));
                 ?>

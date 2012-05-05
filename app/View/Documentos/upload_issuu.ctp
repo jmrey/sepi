@@ -8,7 +8,7 @@
         echo $this->Session->flash();
     ?>
     <div class="well form">
-        <?php echo $this->Form->create(null, array('type' => 'file', 'action' => 'upload_issuu', 'class' => 'form-inline')); ?>
+        <?php echo $this->Form->create('Documento', array('type' => 'file', 'action' => 'upload_issuu', 'class' => 'form-inline')); ?>
         <fieldset>
             <legend>Subir Archivo</legend>
             <?php /*echo $this->Form->input('Documento.submittedfile',
@@ -19,31 +19,14 @@
                 'value' => 'issuu.document.upload'
             ));
             
-            /*echo $this->Form->input('apiKey', array(
-                'type' => 'hidden',
-                'name' => 'apiKey',
-                'value' => $apiKey
+            echo $this->Form->input('name', array(
+                'label' => 'Nombre de Documento'
             ));
             
-            echo $this->Form->input('signature', array(
-                'type' => 'hidden',
-                'name' => 'signature',
-                'value' => $signature
-            ));*/
-            
-            /*echo $this->Form->input('format', array(
-                'type' => 'hidden',
-                'name' => 'format',
-                'value' => 'json'
-            ));*/
-            
-            /*echo $this->Form->input('Titulo', array(
-                'name' => 'title'
+            echo $this->Form->input('description', array(
+                'label' => 'Descripción',
+                'type' => 'textarea'
             ));
-            
-            echo $this->Form->textarea('Descripcion', array(
-                'name' => 'description'
-            ));*/
             
             echo $this->Form->input('file', array(
                     'type' => 'file',

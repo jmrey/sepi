@@ -14,7 +14,7 @@ class User extends AppModel {
     
     public $validate = array(
         'username' => array(
-            'validateUserame' => array(
+            'validateUsername' => array(
                 'rule' => array('alphaNumeric'),
                 'required' => true,
                 'message' => 'Nombre usuario debe contener letras y números.'

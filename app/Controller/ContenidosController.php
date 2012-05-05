@@ -11,18 +11,33 @@ class ContenidosController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('display', 'announcements');
+        $this->Auth->allow('display', 'announcements', 'welcome');
         $this->set('title_for_layout', 'Contenidos');
     }
     
+    /*
+     * Función 
+     */
+    public function welcome(){
+        $this->layout = 'pages';
+        $this->set('convocatorias', $this->Contenido->find('all', array(
+            'limit' => 4,
+            'conditions' => array('Contenido.type' => 'convocatoria')
+        )));
+    }
+    
+    
     public function index() {
-        if (parent::isAdmin($this->Auth->user())) {
+        if (parent::isAdmin()) {
             $this->redirect(array('action' => 'index', 'admin' => 1));
         }
         $this->warning('No tienes los permisos suficientes para entrar a esta area.');
     }
     
     public function admin_index() {
+        if (!parent::isAdmin()) {
+            $this->redirect(array('action' => 'index', 'admin' => 0));
+        }
         $this->set('contenidos', $this->Contenido->find('all'));
         $this->render('index');
     }
@@ -56,7 +71,6 @@ class ContenidosController extends AppController {
         $this->set('requireEditor',true);
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->Contenido->create();
-            //$this->request->data['Contenido']['user_id'] = $this->Session->read('Auth.User.id');
             $this->request->data['Contenido']['user_id'] = $this->Auth->user('id');
             if ($this->Contenido->save($this->request->data)) {
                 $this->success('Se ha guardado la contenido');
@@ -66,7 +80,6 @@ class ContenidosController extends AppController {
             }
         } else {
             $this->set('type', $type);
-            //debug($this->request->data);
         }
         $this->render('add');
     }

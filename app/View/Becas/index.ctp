@@ -11,9 +11,9 @@
                 <th>Usuario</th>
                 <?php endif; ?>
                 <th>Tipo</th>
-                <th>Estado</th>
                 <th>Empieza</th>
                 <th>Termina</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -33,9 +33,27 @@
                 </td>
                 <?php endif; ?>
                 <td><?php echo strtoupper($beca['type']); ?></td>
-                <td><?php echo $beca['status'] ? 'Aprobada' : 'En revisón'; ?></td>
                 <td><?php echo $this->Time->format('F j, Y', $beca['begin_date']); ?></td>
                 <td><?php echo $this->Time->format('F j, Y', $beca['end_date']); ?></td>
+                <td>
+                    <?php 
+                        /*echo $nota['status'] ? 'Aprobada' : 'En revisón';*/ 
+                        if ($isAdmin) {
+                            $status_opts = array('En revisión', 'Aprobada', 'Cancelada');
+                            echo $this->Form->input('status', array(
+                                'options' => $status_opts,
+                                'label' => false,
+                                'default' => $beca['status'],
+                                'class' => 'dk',
+                                'name' => 'dk' . $beca['id'],
+                                'id' => 'dk_status' . $beca['id'],
+                                'div' => false
+                            ));
+                        } else {
+                            echo $beca['status'] ? 'Aprobada' : 'En revisón';
+                        }
+                    ?>
+                </td>
                 <td>
                     <?php 
                         if($isAdmin && !$beca['status']) {
@@ -44,12 +62,16 @@
                                 array('confirm' => '¿Está seguro?', 'class' => 'success'));
 
                         }
+                    ?>
+                    <?php
                         echo $this->Html->link('Notas', '#',
                                 array('class' => 'toggle-notes'));
+                    ?>
+                    <?php
                         echo $this->Form->postLink('Cancelar',
                             array('action' => 'delete', $beca['id'], 'admin' => 0),
                             array('confirm' => '¿Está seguro?', 'class' => 'danger'));
-                        ?>
+                    ?>
                 </td>
             </tr>
             <tr class="tr-notes">

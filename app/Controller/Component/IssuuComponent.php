@@ -9,6 +9,19 @@
 
 class IssuuComponent extends Component {
     /**
+     * Url de la API de issuu
+     * @var string 
+     */
+    public $apiAddress = null;
+    
+    /**
+     * Nombre del archivo.
+     * 
+     * @var string 
+     */
+    private $_name = null;
+    
+    /**
      * Nombre de la acción a realizar.
      * @var string 
      */
@@ -32,13 +45,12 @@ class IssuuComponent extends Component {
      */
     private $_response;
     
-    
-    private $_file;
     /**
+     * Array que guarda los datos del archivo.
      * 
-     * @var type 
+     * @var array 
      */
-    private $_responseType;
+    private $_file;
     
     /**
      * Key de la API pública
@@ -51,12 +63,6 @@ class IssuuComponent extends Component {
      * @var string 
      */
     private $_privateApiKey;
-    
-    /**
-     * Url de la API de issuu
-     * @var string 
-     */
-    public $apiAddress = null;
     
     /**
      * Component Contruct
@@ -90,7 +96,7 @@ class IssuuComponent extends Component {
     public function executeAction() {
         $this->prepareData();
         $this->sendData();
-        
+        return $this->itsOk();
     }
     
     /**
@@ -103,10 +109,33 @@ class IssuuComponent extends Component {
         $this->_dataString = null;
         $this->_actionName = null;
         $this->_response = null;
+        $this->_name = null;
+    }
+    
+    /**
+     * Establece el nombre del archivo.
+     * 
+     * @param string $name 
+     */
+    public function name($name = '') {
+        if ($name === '') {
+            $name = $this->_file['name'];
+            $name = strtolower(trim($name));
+            $name = preg_replace('/[^a-z0-9._-]/', '_', $name);
+            $name = preg_replace('/_+/', "_", $name);
+        }
+        
+        $this->_name = $name;
+        //debug($this->_name); die;
+    }
+    
+    public function getName() {
+        return $this->_name;
     }
     
     /**
      * Retorna todos los datos de la acción como string
+     * 
      * @return string 
      */
     public function getActionData() {
@@ -157,6 +186,20 @@ class IssuuComponent extends Component {
         return $this->_response;
     }
     
+    public function getResponseDoc() {
+        $doc = $this->_response['rsp']['_content']['document'];
+        $doc['size'] = $this->_file['size'];
+        return $doc;
+    }
+    
+    private function itsOk() {
+        $stat = false;
+        if ($this->_response['rsp']['stat'] === 'ok') {
+            $stat = true; 
+        }
+        return $stat;
+    }
+    
     /**
      * Prepara los datos de la acción.
      * 
@@ -165,28 +208,26 @@ class IssuuComponent extends Component {
     protected function prepareData() {
         $this->_data['apiKey'] = $this->_publicApiKey;
         $this->_data['action'] = $this->_actionName;
-        $this->_data['name'] = $this->_file['name'];
+        $this->_data['access'] = 'private';
+        $this->_data['name'] = $this->_name;
         $this->_data['format'] = 'json';
-        //$fileName = $this->_file['tmp_name'];
-        //$this->_data['file'] = "@$fileName";
         $this->_data['responseParams'] = 'title,documentId';
-        //debug($this->_data); die;
-        ksort($this->_data);
+        
+        
+        ksort($this->_data);                            // Ordena el array.
         $signature = (string)$this->_privateApiKey;
         foreach($this->_data as $k => $v){
             $this->_dataString[] = $k . '=' . $v;
             $signature .= $k . $v;
         }
+        
         $this->_data['signature'] = md5($signature);
         $fileName = $this->_file['tmp_name'];
         $this->_data['file'] = "@$fileName";
+        //debug($this->_data); die;
         $this->_dataString[] = 'signature' . '=' . $this->_data['signature'];
-        //debug($this->_dataString); die;
         $this->_dataString .= implode('&', $this->_dataString);
-        //debug($this->_dataString); die;
         $this->_dataString = preg_replace('{Array}', '', $this->_dataString);
-        //return $this->_dataString;
-        //debug($this->_dataString); die;
     }
     
     /**
@@ -195,16 +236,13 @@ class IssuuComponent extends Component {
      * @return void
      */
     protected function sendData() {
-        //debug($this->_dataString); die;
         $ch = curl_init();
-        //debug($ch); die;
+        
         curl_setopt($ch, CURLOPT_URL, $this->apiAddress);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        //debug($this->_data) ; die;
         $this->prepareReceivedData(curl_exec($ch));
-        //die;
     }
     
     /**
@@ -214,7 +252,6 @@ class IssuuComponent extends Component {
      * @return void 
      */
     protected function prepareReceivedData($jsonData) {
-        //debug($jsonData); die;
         $this->_response = json_decode($jsonData, true);
     }
 }

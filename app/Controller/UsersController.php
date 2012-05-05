@@ -6,6 +6,7 @@ class UsersController extends AppController {
     public $components = array('Session','Email');
     public $name = 'Users';
     //$this->la
+    //aBzFR56kMm
     
     private $roles = array('admin' => 1, 'alumno' => 2, 'profesor' => 3, 'administrativo' => 4);
     

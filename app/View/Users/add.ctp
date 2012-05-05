@@ -32,9 +32,10 @@
     </fieldset>
     <div class="form-actions">
         <?php 
-            echo $this->Form->end(array('label' => 'Registrar', 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Form->submit(array('label' => 'Registrar', 'class' => 'btn btn-success btn-large', 'div' => false));
             echo $this->Form->button('Limpiar', array('type' => 'reset', 'class' => 'btn btn-large'));
             echo $this->Html->link('Iniciar Sesión', '/login');
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

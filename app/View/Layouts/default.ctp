@@ -12,7 +12,7 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
     <meta name="author" content="" />
     <?php
         echo $this->Html->meta('icon');
-        echo $this->Html->css(array('bootstrap', 'main', 'flick/jquery-ui-1.8.17.custom'));
+        echo $this->Html->css(array('bootstrap', 'main', 'jquery.fileupload-ui', 'flick/jquery-ui-1.8.17.custom'));
         echo $scripts_for_layout;
     ?>
 </head>
@@ -78,6 +78,15 @@ $sepiDescription = __d('sepi_desc', 'Sección de Estudios de Posgrado e Investig
         if (isset($requireEditor) && $requireEditor == true) {
             echo $this->Html->scriptBlock('var useCKeditor = true;');
             array_push($scripts_array, 'ckeditor/ckeditor','ckeditor/adapters/jquery');
+        }
+        
+        if (isset($requireDropkick) && $requireDropkick == true) {
+            echo $this->Html->scriptBlock('var useDropkick = true;');
+            array_push($scripts_array, 'dropkick.min');
+        }
+        if (isset($requireFileupload) && $requireFileupload == true) {
+            echo $this->Html->scriptBlock('var useFileupload = true;');
+            array_push($scripts_array, 'axuploader');
         }
         array_push($scripts_array,'sepi');
         

@@ -17,8 +17,8 @@
         </tr>
 
         <!-- Here is where we loop through our $posts array, printing out post info -->
-        <?php foreach ($users as $u): ?>
-        <?php  $user = $u['User']?>
+        <?php foreach ($users as $doc): ?>
+        <?php  $user = $doc['User']?>
         <tr>
             <td><?php echo $user['id']; ?></td>
             <td>

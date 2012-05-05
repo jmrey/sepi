@@ -11,7 +11,7 @@ var config = {
 
             };
 
-$(document).ready(function(){
+$(document).on('ready', function(){
     //var useCKeditor = useCKeditor || false;
     if(typeof(useCKeditor) != 'undefined') {
         $( 'textarea.editor' ).ckeditor(config);
@@ -47,5 +47,22 @@ $(document).ready(function(){
             altField: $(this).siblings('.alternate')
         });
     });
+    if(typeof(useDropkick) != 'undefined') {
+        $('.dk').dropkick({
+            theme: 'main',
+            change: function (value, label) {
+                alert('You picked: ' + label + ':' + value);
+            }
+        });
+    }
+    if(typeof(useFileupload) != 'undefined') {
+        $('#demo1').axuploader({
+            url:'/documentos/upload/',
+            onFinish:function(txt, files){
+                alert('All files uploaded server return:' + txt);
+            }
+        });
+
+    }
 });
 
